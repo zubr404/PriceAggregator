@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Binance.Common.Kline;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +38,12 @@ namespace Binance.DataSource.Kline
                         else
                         {
                             candles.Add(candle);
+                            if (candles.Count > CommonSettings.LIMIT_KLINES) // поддерживаем определенную глубину истории
+                            {
+                                var minOpenTime = candles.Min(x => x.TimeOpen);
+                                var firstCandleIndex = candles.FindIndex(x => x.TimeOpen == minOpenTime);
+                                candles.RemoveAt(firstCandleIndex);
+                            }
                             return DataOperationType.Add;
                         }
                     }

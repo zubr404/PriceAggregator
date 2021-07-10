@@ -49,5 +49,11 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Binance.Common.Kline\Binance.Common.Kline.csproj">
+      <Project>{42f8fbcb-863a-4edf-a79a-02c2cea062a3}</Project>
+      <Name>Binance.Common.Kline</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

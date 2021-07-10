@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using WebSocketSharp;
 
 namespace Binance.StockExchange.Kline.WS
@@ -14,47 +15,85 @@ namespace Binance.StockExchange.Kline.WS
         private WebSocket webSocket;
         private readonly string channels;
         private readonly IRepository repository;
+        private readonly Timer timer;
+        private bool isRestartStream;
 
-        public KlineStreamService(IRepository repository, string channels)
+        private DateTime restartDateTime;
+
+        public KlineStreamService(IRepository repository, string channels, TimeSpan restartSocketTime)
         {
             this.channels = channels;
             this.repository = repository;
+            this.restartDateTime = DateTime.Now.Date + restartSocketTime;
+            isRestartStream = true;
+            timer = new Timer(1000);
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (DateTime.Now > restartDateTime)
+            {
+                restartDateTime = restartDateTime.AddDays(1);
+                socketClose();
+            }
         }
 
         public void SocketOpen()
         {
             try
             {
-                webSocket = new WebSocket($"{SOCKET}{channels}");
-                webSocket.OnMessage += WebSocket_OnMessage;
-                webSocket.OnError += WebSocket_OnError;
-                webSocket.OnClose += WebSocket_OnClose;
-                webSocket.OnOpen += WebSocket_OnOpen;
-                webSocket.Connect();
+                socketOpen();
+                isRestartStream = true;
             }
             catch (Exception)
             {
                 throw;
             }
         }
+        private void socketOpen()
+        {
+            webSocket = new WebSocket($"{SOCKET}{channels}");
+            webSocket.OnMessage += WebSocket_OnMessage;
+            webSocket.OnError += WebSocket_OnError;
+            webSocket.OnClose += WebSocket_OnClose;
+            webSocket.OnOpen += WebSocket_OnOpen;
+            webSocket.Connect();
+        }
 
         public void SocketClose()
         {
+            isRestartStream = false;
+            socketClose();
+        }
+        private void socketClose()
+        {
             webSocket?.Close();
+        }
+
+        private void restartSocket()
+        {
+            if (isRestartStream)
+            {
+                SocketOpen();
+            }
         }
 
         private void WebSocket_OnOpen(object sender, EventArgs e)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"{DateTime.Now} Connect open");
+            Console.WriteLine($"{DateTime.Now} Connect open {restartDateTime}");
             Console.ResetColor();
         }
 
         private void WebSocket_OnClose(object sender, CloseEventArgs e)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{DateTime.Now} Connect close");
+            Console.WriteLine($"{DateTime.Now} Connect close {restartDateTime}");
             Console.ResetColor();
+
+            restartSocket();
         }
 
         private void WebSocket_OnError(object sender, ErrorEventArgs e)
@@ -62,6 +101,8 @@ namespace Binance.StockExchange.Kline.WS
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"{DateTime.Now} Error: {e.Message}");
             Console.ResetColor();
+
+            socketClose();
         }
 
         private void WebSocket_OnMessage(object sender, MessageEventArgs e)
@@ -82,6 +123,7 @@ namespace Binance.StockExchange.Kline.WS
                     IsClose = kline.k.x
                 };
                 repository.CreateOrUpdate(candle);
+                //Console.WriteLine($"{candle.TimeOpen} {candle.Simbol} {candle.Close} {candle.IsClose}");
             }
             catch (Exception ex)
             {

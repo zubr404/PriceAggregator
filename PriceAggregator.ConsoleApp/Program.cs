@@ -27,7 +27,8 @@ namespace PriceAggregator.ConsoleApp
 
             var _pairs = new string[] { "BTCUSDT" };
             var _intervals = new string[] { "1m" };
-            var pairs = exchangeInfo.AllPairsMarket.MarketPairs.Select(x => x.Pair).Take(300);
+            var pairs = exchangeInfo.AllPairsMarket.MarketPairs.Select(x => x.Pair);
+            var intervals = KlineTimeframe.TimeframesAll;
 
             // paging
             //for (int i = 0; i < pairs.Count() - 1; i+=19)
@@ -38,8 +39,8 @@ namespace PriceAggregator.ConsoleApp
             //}
 
 
-            klineStreamManager.ConnectStreams(pairs, KlineTimeframe.TimeframesAll);
-            klineReceiver.Get(pairs, KlineTimeframe.TimeframesAll).GetAwaiter().GetResult();
+            klineStreamManager.ConnectStreams(pairs, intervals, CommonSettings.RESTART_STREAM_TIME, CommonSettings.INTERVAL_CHANNEL_RESTART);
+            //klineReceiver.Get(pairs, intervals).GetAwaiter().GetResult();
             
 
 
