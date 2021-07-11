@@ -69,7 +69,7 @@ namespace Binance.DataSource.Kline
             return dataContext.Candles;
         }
 
-        public IEnumerable<Candle> Get(string simbol, string interval)
+        public IReadOnlyCollection<Candle> Get(string simbol, string interval)
         {
             if (dataContext.Candles.ContainsKey(simbol))
             {
@@ -85,26 +85,6 @@ namespace Binance.DataSource.Kline
             else
             {
                 return null;
-            }
-        }
-
-        public void Remove(string simbol, string interval, long timeOpen)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveFirst(string simbol, string interval)
-        {
-            if (dataContext.Candles.ContainsKey(simbol))
-            {
-                if (dataContext.Candles[simbol].ContainsKey(interval))
-                {
-                    var candles = dataContext.Candles[simbol][interval];
-                    if (candles.Count > 0)
-                    {
-                        dataContext.Candles[simbol][interval].RemoveAt(0);
-                    }
-                }
             }
         }
     }

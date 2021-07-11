@@ -10,8 +10,6 @@ namespace Binance.DataSource.Kline
     {
         DataOperationType CreateOrUpdate(Candle candle);
         Candles Get();
-        IEnumerable<Candle> Get(string simbol, string interval);
-        void Remove(string simbol, string interval, long timeOpen);
-        void RemoveFirst(string simbol, string interval);
+        IReadOnlyCollection<Candle> Get(string simbol, string interval);
     }
 }

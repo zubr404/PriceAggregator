@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binance.Common.Kline", "Bin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceAggregator.ConsoleApp", "PriceAggregator.ConsoleApp\PriceAggregator.ConsoleApp.csproj", "{583B20E2-8DF8-40F7-90B2-8AAB2F1F666E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceAggregator.WPFApp", "PriceAggregator.WPFApp\PriceAggregator.WPFApp.csproj", "{6549DFC3-DDF7-4B5C-8A0F-3F7F10297C87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceAggregator.Library", "PriceAggregator.Library\PriceAggregator.Library.csproj", "{D6E1D2B1-77D9-4862-A09B-6EEC714C4C62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{583B20E2-8DF8-40F7-90B2-8AAB2F1F666E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{583B20E2-8DF8-40F7-90B2-8AAB2F1F666E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{583B20E2-8DF8-40F7-90B2-8AAB2F1F666E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6549DFC3-DDF7-4B5C-8A0F-3F7F10297C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6549DFC3-DDF7-4B5C-8A0F-3F7F10297C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6549DFC3-DDF7-4B5C-8A0F-3F7F10297C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6549DFC3-DDF7-4B5C-8A0F-3F7F10297C87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6E1D2B1-77D9-4862-A09B-6EEC714C4C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6E1D2B1-77D9-4862-A09B-6EEC714C4C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6E1D2B1-77D9-4862-A09B-6EEC714C4C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6E1D2B1-77D9-4862-A09B-6EEC714C4C62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
