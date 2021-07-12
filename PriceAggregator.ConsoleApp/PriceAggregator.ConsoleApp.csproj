@@ -62,6 +62,10 @@
       <Project>{3447e5b7-9c2b-4ef5-b898-e41cebf6bb06}</Project>
       <Name>Binance.StockExchange.Kline</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PriceAggregator.Library\PriceAggregator.Library.csproj">
+      <Project>{d6e1d2b1-77d9-4862-a09b-6eec714c4c62}</Project>
+      <Name>PriceAggregator.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

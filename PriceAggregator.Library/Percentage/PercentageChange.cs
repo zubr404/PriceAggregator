@@ -10,6 +10,6 @@ namespace PriceAggregator.Library.Percentage
     {
         public string Simbol { get; set; }
         public string Interval { get; set; }
-        public decimal Percentage { get; set; }
+        public decimal? Percentage { get; set; }
     }
 }

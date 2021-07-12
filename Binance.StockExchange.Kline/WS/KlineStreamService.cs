@@ -24,11 +24,21 @@ namespace Binance.StockExchange.Kline.WS
         {
             this.channels = channels;
             this.repository = repository;
-            this.restartDateTime = DateTime.Now.Date + restartSocketTime;
+            setRestartDateTime(restartSocketTime);
             isRestartStream = true;
             timer = new Timer(1000);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
+        }
+
+        private void setRestartDateTime(TimeSpan restartSocketTime)
+        {
+            var currentDateTime = DateTime.Now;
+            restartDateTime = DateTime.Now.Date + restartSocketTime;
+            if (restartDateTime <= currentDateTime)
+            {
+                restartDateTime = restartDateTime.AddDays(1);
+            }
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)

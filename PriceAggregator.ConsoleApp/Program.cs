@@ -8,15 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.IO;
+using PriceAggregator.Library;
 
 namespace PriceAggregator.ConsoleApp
 {
     class Program
     {
-        private static CandlesRepository candlesRepository = new CandlesRepository();
+        private static IRepository candlesRepository = new CandlesRepository();
         private static KlineReceiver klineReceiver = new KlineReceiver(candlesRepository);
         private static KlineStreamManager klineStreamManager = new KlineStreamManager(candlesRepository);
         private static ExchangeInfo exchangeInfo = new ExchangeInfo();
+
+        private static PriceAggregatorManager priceAggregatorManager = new PriceAggregatorManager(candlesRepository);
+
+        private static IEnumerable<string> pairs;
+        private static IEnumerable<string> intervals;
 
         static void Main(string[] args)
         {
@@ -25,29 +31,22 @@ namespace PriceAggregator.ConsoleApp
             var timeStart = DateTime.Now;
             Console.WriteLine($"{timeStart} ......START......");
 
-            var _pairs = new string[] { "BTCUSDT" };
-            var _intervals = new string[] { "1m" };
-            var pairs = exchangeInfo.AllPairsMarket.MarketPairs.Select(x => x.Pair);
-            var intervals = KlineTimeframe.TimeframesAll;
+            pairs = new string[] { "BTCUSDT" };
+            intervals = new string[] { "3h" };
+            //pairs = exchangeInfo.AllPairsMarket.MarketPairs.Select(x => x.Pair);
+            //intervals = KlineTimeframe.TimeframesAll;
+            var intervalsAdaptive = KlineTimeframe.TimeframesAdaptive;
 
-            // paging
-            //for (int i = 0; i < pairs.Count() - 1; i+=19)
-            //{
-            //    var pairsPage = pairs.Skip(i).Take(19);
-            //    klineReceiver.Get(pairsPage, KlineTimeframe.TimeframesAll).GetAwaiter().GetResult();
-            //    klineStreamManager.ConnectStreams(pairsPage, KlineTimeframe.TimeframesAll);
-            //}
+            klineStreamManager.ConnectStreams(pairs, intervalsAdaptive, CommonSettings.RESTART_STREAM_TIME, CommonSettings.INTERVAL_CHANNEL_RESTART);
+            klineReceiver.Get(pairs, intervalsAdaptive).GetAwaiter().GetResult();
 
-
-            klineStreamManager.ConnectStreams(pairs, intervals, CommonSettings.RESTART_STREAM_TIME, CommonSettings.INTERVAL_CHANNEL_RESTART);
-            //klineReceiver.Get(pairs, intervals).GetAwaiter().GetResult();
-            
-
+            var secondThread = new Thread(priceAggregatorRun);
+            secondThread.Start();
 
 
             Console.WriteLine($"{DateTime.Now} Press any key for close connects Time start {timeStart}");
             Console.Read();
-
+            secondThread.Abort();
             klineStreamManager.DisconnectStream();
 
             var resultRepositoryString = new StringBuilder();
@@ -70,6 +69,19 @@ namespace PriceAggregator.ConsoleApp
 
             Console.WriteLine("Press any key for exit");
             Console.ReadKey();
+        }
+
+        private static void priceAggregatorRun()
+        {
+            while (true)
+            {
+                priceAggregatorManager.Run(pairs, intervals);
+                foreach (var percentageChange in priceAggregatorManager.PercentageChanges)
+                {
+                    Console.WriteLine($"{DateTime.Now} {percentageChange.Simbol} {percentageChange.Interval} {percentageChange.Percentage}");
+                }
+                Thread.Sleep(2000);
+            }
         }
 
         private static void TestSocket()

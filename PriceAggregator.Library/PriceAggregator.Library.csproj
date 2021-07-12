@@ -41,11 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\PercentageExtension.cs" />
     <Compile Include="Interfaces\IPercentage.cs" />
     <Compile Include="Percentage\PercentageChange.cs" />
     <Compile Include="Percentage\PercentageChangeService.cs" />
-    <Compile Include="Percentage\PercentageMatchingTimeframes.cs" />
-    <Compile Include="Percentage\PercentageMinute1.cs" />
+    <Compile Include="Percentage\PercentageFactory.cs" />
+    <Compile Include="Percentage\PercentageHour3.cs" />
+    <Compile Include="Percentage\PercentageMatchingInterval.cs" />
+    <Compile Include="PriceAggregatorManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,5 +61,6 @@
       <Name>Binance.DataSource.Kline</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
