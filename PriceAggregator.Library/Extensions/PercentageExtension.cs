@@ -1,4 +1,6 @@
 ﻿using Binance.DataSource.Kline;
+using PriceAggregator.Library.Interfaces;
+using PriceAggregator.Library.Percentage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,28 @@ namespace PriceAggregator.Library.Extensions
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// Возвращает PercentageChange
+        /// </summary>
+        /// <param name="percentageModel"></param>
+        /// <param name="repository"></param>
+        /// <param name="simbol"></param>
+        /// <param name="intervalBinance">Базовый интервал из документации Бинанс</param>
+        /// <param name="intervalUser">Интервал пользователя</param>
+        /// <param name="countTake"></param>
+        /// <returns></returns>
+        public static PercentageChange GetPercentageChange(this IPercentage percentageModel, IRepository repository, string simbol, string intervalBinance, string intervalUser, int countTake)
+        {
+            var candles = repository.Get(simbol, intervalBinance);
+            var percentage = candles.GetPercentage(countTake);
+            return new PercentageChange()
+            {
+                Interval = intervalUser,
+                Percentage = percentage,
+                Simbol = simbol
+            };
         }
     }
 }

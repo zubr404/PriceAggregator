@@ -44,6 +44,27 @@ namespace PriceAggregator.Library.Percentage
                                     case KlineTimeframe.hour3:
                                         result.Add(new PercentageHour3(repository, simbol, interval));
                                         break;
+                                    case KlineTimeframe.day2:
+                                        result.Add(new PercentageDay2(repository, simbol, interval));
+                                        break;
+                                    case KlineTimeframe.day5:
+                                        result.Add(new PercentageDay5(repository, simbol, interval));
+                                        break;
+                                    case KlineTimeframe.weekly2:
+                                        result.Add(new PercentageWeekly2(repository, simbol, interval));
+                                        break;
+                                    case KlineTimeframe.month2:
+                                        result.Add(new PercentageMonth2(repository, simbol, interval));
+                                        break;
+                                    case KlineTimeframe.month3:
+                                        result.Add(new PercentageMonth3(repository, simbol, interval));
+                                        break;
+                                    case KlineTimeframe.month6:
+                                        result.Add(new PercentageMonth6(repository, simbol, interval));
+                                        break;
+                                    case KlineTimeframe.year1:
+                                        result.Add(new PercentageYear1(repository, simbol, interval));
+                                        break;
                                     default:
                                         break;
                                 }

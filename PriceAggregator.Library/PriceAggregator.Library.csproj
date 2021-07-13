@@ -45,9 +45,16 @@
     <Compile Include="Interfaces\IPercentage.cs" />
     <Compile Include="Percentage\PercentageChange.cs" />
     <Compile Include="Percentage\PercentageChangeService.cs" />
+    <Compile Include="Percentage\PercentageDay2.cs" />
+    <Compile Include="Percentage\PercentageDay5.cs" />
     <Compile Include="Percentage\PercentageFactory.cs" />
     <Compile Include="Percentage\PercentageHour3.cs" />
     <Compile Include="Percentage\PercentageMatchingInterval.cs" />
+    <Compile Include="Percentage\PercentageMonth2.cs" />
+    <Compile Include="Percentage\PercentageMonth3.cs" />
+    <Compile Include="Percentage\PercentageMonth6.cs" />
+    <Compile Include="Percentage\PercentageWeekly2.cs" />
+    <Compile Include="Percentage\PercentageYear1.cs" />
     <Compile Include="PriceAggregatorManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +66,10 @@
     <ProjectReference Include="..\Binance.DataSource.Kline\Binance.DataSource.Kline.csproj">
       <Project>{4647d387-449e-46e9-9677-92b37be02451}</Project>
       <Name>Binance.DataSource.Kline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Binance.StockExchange.Kline\Binance.StockExchange.Kline.csproj">
+      <Project>{3447e5b7-9c2b-4ef5-b898-e41cebf6bb06}</Project>
+      <Name>Binance.StockExchange.Kline</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace PriceAggregator.Library.Percentage
 {
-    public class PercentageHour3 : IPercentage
+    public class PercentageDay5 : IPercentage
     {
         private readonly IRepository repository;
         private readonly string simbol;
         private readonly string interval;
 
-        public PercentageHour3(IRepository repository, string simbol, string interval)
+        public PercentageDay5(IRepository repository, string simbol, string interval)
         {
             this.repository = repository;
             this.simbol = simbol;
@@ -25,7 +25,7 @@ namespace PriceAggregator.Library.Percentage
 
         public PercentageChange GetPercentage()
         {
-            return this.GetPercentageChange(repository, simbol, KlineTimeframe.hour1, interval, 3);
+            return this.GetPercentageChange(repository, simbol, KlineTimeframe.day1, interval, 5);
         }
     }
 }

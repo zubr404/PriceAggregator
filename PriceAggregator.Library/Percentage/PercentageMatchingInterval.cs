@@ -32,7 +32,7 @@ namespace PriceAggregator.Library.Percentage
             return new PercentageChange()
             {
                 Interval = interval,
-                Percentage = percentage.Value,
+                Percentage = percentage,
                 Simbol = simbol
             };
         }

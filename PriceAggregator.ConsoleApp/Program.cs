@@ -15,10 +15,6 @@ namespace PriceAggregator.ConsoleApp
     class Program
     {
         private static IRepository candlesRepository = new CandlesRepository();
-        private static KlineReceiver klineReceiver = new KlineReceiver(candlesRepository);
-        private static KlineStreamManager klineStreamManager = new KlineStreamManager(candlesRepository);
-        private static ExchangeInfo exchangeInfo = new ExchangeInfo();
-
         private static PriceAggregatorManager priceAggregatorManager = new PriceAggregatorManager(candlesRepository);
 
         private static IEnumerable<string> pairs;
@@ -26,61 +22,58 @@ namespace PriceAggregator.ConsoleApp
 
         static void Main(string[] args)
         {
-            //Dictionary<string, Dictionary<string, List<K>>> dataSource = new Dictionary<string, Dictionary<string, List<K>>>();
-
-            var timeStart = DateTime.Now;
-            Console.WriteLine($"{timeStart} ......START......");
-
-            pairs = new string[] { "BTCUSDT" };
-            intervals = new string[] { "3h" };
-            //pairs = exchangeInfo.AllPairsMarket.MarketPairs.Select(x => x.Pair);
-            //intervals = KlineTimeframe.TimeframesAll;
-            var intervalsAdaptive = KlineTimeframe.TimeframesAdaptive;
-
-            klineStreamManager.ConnectStreams(pairs, intervalsAdaptive, CommonSettings.RESTART_STREAM_TIME, CommonSettings.INTERVAL_CHANNEL_RESTART);
-            klineReceiver.Get(pairs, intervalsAdaptive).GetAwaiter().GetResult();
-
-            var secondThread = new Thread(priceAggregatorRun);
-            secondThread.Start();
-
-
-            Console.WriteLine($"{DateTime.Now} Press any key for close connects Time start {timeStart}");
-            Console.Read();
-            secondThread.Abort();
-            klineStreamManager.DisconnectStream();
-
-            var resultRepositoryString = new StringBuilder();
-            foreach (var item1 in candlesRepository.Get())
+            try
             {
-                //Console.WriteLine(item1.Key);
-                resultRepositoryString.Append($"{item1.Key}\n");
-                foreach (var item2 in item1.Value)
-                {
-                    //Console.WriteLine($"\t{item2.Key}");
-                    resultRepositoryString.Append($"\t{item2.Key}\n");
-                    foreach (var item3 in item2.Value)
-                    {
-                        //Console.WriteLine($"\t\t{item3.TimeOpen} {item3.TimeClose} {item3.Simbol} {item3.Interval} {item3.Open} {item3.Close} {item3.High} {item3.Low} {item3.IsClose}");
-                        resultRepositoryString.Append($"\t\t{item3.TimeOpen} {item3.TimeClose} {item3.Simbol} {item3.Interval} {item3.Open} {item3.Close} {item3.High} {item3.Low} {item3.IsClose}\n");
-                    }
-                }
-            }
-            File.WriteAllText(@"C:\tmp\Klines.txt", resultRepositoryString.ToString());
+                var timeStart = DateTime.Now;
+                Console.WriteLine($"{timeStart} ......START......");
 
-            Console.WriteLine("Press any key for exit");
-            Console.ReadKey();
-        }
+                pairs = new string[] { "BTCUSDT" };
+                pairs = priceAggregatorManager.Pairs;
+                intervals = new string[] { "3h" };
+                intervals = KlineTimeframe.TimeframesForAggregator;
 
-        private static void priceAggregatorRun()
-        {
-            while (true)
-            {
-                priceAggregatorManager.Run(pairs, intervals);
+                priceAggregatorManager.RunAsync(pairs, intervals);
+
+                Console.WriteLine($"{DateTime.Now} Press any key for close connects Time start {timeStart}");
+                Console.Read();
+                priceAggregatorManager.ThreadAbort();
+
+                Console.WriteLine("..........................................................");
                 foreach (var percentageChange in priceAggregatorManager.PercentageChanges)
                 {
                     Console.WriteLine($"{DateTime.Now} {percentageChange.Simbol} {percentageChange.Interval} {percentageChange.Percentage}");
                 }
-                Thread.Sleep(2000);
+                Console.WriteLine("..........................................................");
+
+                Console.WriteLine("Press any key for exit");
+                Console.ReadKey();
+
+
+                #region Запись в файл
+                //var resultRepositoryString = new StringBuilder();
+                //foreach (var item1 in candlesRepository.Get())
+                //{
+                //    //Console.WriteLine(item1.Key);
+                //    resultRepositoryString.Append($"{item1.Key}\n");
+                //    foreach (var item2 in item1.Value)
+                //    {
+                //        //Console.WriteLine($"\t{item2.Key}");
+                //        resultRepositoryString.Append($"\t{item2.Key}\n");
+                //        foreach (var item3 in item2.Value)
+                //        {
+                //            //Console.WriteLine($"\t\t{item3.TimeOpen} {item3.TimeClose} {item3.Simbol} {item3.Interval} {item3.Open} {item3.Close} {item3.High} {item3.Low} {item3.IsClose}");
+                //            resultRepositoryString.Append($"\t\t{item3.TimeOpen} {item3.TimeClose} {item3.Simbol} {item3.Interval} {item3.Open} {item3.Close} {item3.High} {item3.Low} {item3.IsClose}\n");
+                //        }
+                //    }
+                //}
+                //File.WriteAllText(@"C:\tmp\Klines.txt", resultRepositoryString.ToString());
+                #endregion
+
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
             }
         }
 
