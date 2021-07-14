@@ -6,6 +6,12 @@
         xmlns:local="clr-namespace:PriceAggregator.WPFApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:ModelView x:Key="ViewModel"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Source="{StaticResource ViewModel}"/>
+    </Window.DataContext>
     <Grid>
         
     </Grid>

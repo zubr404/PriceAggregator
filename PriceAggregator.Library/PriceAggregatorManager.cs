@@ -31,6 +31,7 @@ namespace PriceAggregator.Library
             klineStreamManager = new KlineStreamManager(repository);
             percentageChangeService = new PercentageChangeService(repository);
             threadPriceAggregator = new Thread(processing);
+            PercentageChanges = new List<PercentageChange>();
         }
 
         public IEnumerable<string> Pairs { get; private set; }
@@ -38,7 +39,7 @@ namespace PriceAggregator.Library
 
         public async Task RunAsync(IEnumerable<string> simbols, IEnumerable<string> intervals)
         {
-            klineStreamManager.ConnectStreams(simbols, KlineTimeframe.TimeframesAdaptive, CommonSettings.RESTART_STREAM_TIME, CommonSettings.INTERVAL_CHANNEL_RESTART);
+            await klineStreamManager.ConnectStreams(simbols, KlineTimeframe.TimeframesAdaptive, CommonSettings.RESTART_STREAM_TIME, CommonSettings.INTERVAL_CHANNEL_RESTART);
             await klineReceiver.Get(simbols, KlineTimeframe.TimeframesAdaptive);
 
             Console.ForegroundColor = ConsoleColor.Green;

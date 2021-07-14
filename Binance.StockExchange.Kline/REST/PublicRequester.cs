@@ -15,7 +15,7 @@ namespace Binance.StockExchange.Kline.REST
             {
                 var result = new PublicAPIResponse();
                 var reqGET = (HttpWebRequest)WebRequest.Create(uri);
-                var response = (HttpWebResponse)await reqGET.GetResponseAsync();
+                var response = (HttpWebResponse)await reqGET.GetResponseAsync().ConfigureAwait(false);
                 var stream = response.GetResponseStream();
                 using (var sr = new StreamReader(stream))
                 {

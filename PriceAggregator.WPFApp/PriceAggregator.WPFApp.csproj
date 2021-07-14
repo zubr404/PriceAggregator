@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ModelView.cs" />
+    <Compile Include="ViewModels\PercentageView.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -93,6 +95,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Binance.Common.Kline\Binance.Common.Kline.csproj">
+      <Project>{42f8fbcb-863a-4edf-a79a-02c2cea062a3}</Project>
+      <Name>Binance.Common.Kline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Binance.DataSource.Kline\Binance.DataSource.Kline.csproj">
+      <Project>{4647d387-449e-46e9-9677-92b37be02451}</Project>
+      <Name>Binance.DataSource.Kline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Binance.StockExchange.Kline\Binance.StockExchange.Kline.csproj">
+      <Project>{3447e5b7-9c2b-4ef5-b898-e41cebf6bb06}</Project>
+      <Name>Binance.StockExchange.Kline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PriceAggregator.Library\PriceAggregator.Library.csproj">
+      <Project>{d6e1d2b1-77d9-4862-a09b-6eec714c4c62}</Project>
+      <Name>PriceAggregator.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
