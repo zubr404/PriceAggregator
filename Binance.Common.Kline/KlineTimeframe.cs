@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Binance.Common.Kline
 {
     /// <summary>
-    /// Таймфреймы свечей
+    /// Таймфреймы свечей !!! Очередность в последовательностях не менять !!!
     /// </summary>
     public class KlineTimeframe
     {

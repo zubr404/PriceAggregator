@@ -42,10 +42,10 @@ namespace PriceAggregator.Library
             await klineStreamManager.ConnectStreams(simbols, KlineTimeframe.TimeframesAdaptive, CommonSettings.RESTART_STREAM_TIME, CommonSettings.INTERVAL_CHANNEL_RESTART);
             await klineReceiver.Get(simbols, KlineTimeframe.TimeframesAdaptive);
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{DateTime.Now} Каналы подключены. Исторя загружена.");
-            Console.ResetColor();
+            //Console.ForegroundColor = ConsoleColor.Green;
+            //Console.BackgroundColor = ConsoleColor.Yellow;
+            //Console.WriteLine($"{DateTime.Now} Каналы подключены. Исторя загружена.");
+            //Console.ResetColor();
 
             this.simbols = simbols;
             this.intervals = intervals;
@@ -63,7 +63,7 @@ namespace PriceAggregator.Library
             while (true)
             {
                 PercentageChanges = percentageChangeService.GetPercentages(simbols, intervals);
-                Console.WriteLine($"{DateTime.Now} PercentageChanges count = {PercentageChanges.Count}");
+                //Console.WriteLine($"{DateTime.Now} PercentageChanges count = {PercentageChanges.Count}");
                 //foreach (var percentageChange in PercentageChanges)
                 //{
                 //    Console.WriteLine($"{DateTime.Now} {percentageChange.Simbol} {percentageChange.Interval} {percentageChange.Percentage}");

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace PriceAggregator.WPFApp
@@ -21,9 +22,10 @@ namespace PriceAggregator.WPFApp
         {
             dispatcher = Dispatcher.CurrentDispatcher;
             candlesRepository = new CandlesRepository();
-            priceAggregatorManager = new PriceAggregatorManager(candlesRepository);
+            priceAggregatorManager = new PriceAggregatorManager(candlesRepository);            
 
-            calculatingStart();
+            Application.Current.MainWindow.Closed += MainWindow_Closed;
+            Application.Current.MainWindow.Initialized += MainWindow_Initialized;
         }
 
         public List<PercentageView> PercentageViews { get; set; }
@@ -34,5 +36,18 @@ namespace PriceAggregator.WPFApp
             var intervals = KlineTimeframe.TimeframesForAggregator;
             await priceAggregatorManager.RunAsync(simbols, intervals);
         }
+
+        #region Обработчики событий основного окна
+        private async void MainWindow_Initialized(object sender, EventArgs e)
+        {
+            await calculatingStart();
+            MessageBox.Show("Loading finish");
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            priceAggregatorManager.ThreadAbort();
+        }
+        #endregion
     }
 }
