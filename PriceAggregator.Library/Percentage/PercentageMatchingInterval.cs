@@ -39,15 +39,23 @@ namespace PriceAggregator.Library.Percentage
 
         private decimal? getPercentage(IEnumerable<Candle> candles)
         {
-            if (candles?.Count() > 0)
+            try
             {
-                var candlesCloses = candles.Where(x => x.IsClose);
-                if (candlesCloses?.Count() > 0)
+                if (candles?.Count() > 0)
                 {
-                    var candleLast = candlesCloses.First(x => x.TimeOpen == candlesCloses.Max(t => t.TimeOpen));
-                    var percentage = ((candleLast.Close - candleLast.Open) / candleLast.Open) * 100;
-                    return percentage;
+                    var candlesCloses = candles.Where(x => x.IsClose);
+                    if (candlesCloses?.Count() > 0)
+                    {
+                        var candleLast = candlesCloses.First(x => x.TimeOpen == candlesCloses.Max(t => t.TimeOpen));
+                        var percentage = ((candleLast.Close - candleLast.Open) / candleLast.Open) * 100;
+                        return percentage;
+                    }
                 }
+            }
+            catch
+            {
+                // на случай исключения: коллекция была изменена...
+                // пока не знаю, как это обойти
             }
             return null;
         }

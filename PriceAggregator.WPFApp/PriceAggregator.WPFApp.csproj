@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Extensions\ConverterValues.cs" />
     <Compile Include="ModelView.cs" />
+    <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="Services\PercentageViewsService.cs" />
     <Compile Include="ViewModels\PercentageView.cs" />
     <Page Include="MainWindow.xaml">

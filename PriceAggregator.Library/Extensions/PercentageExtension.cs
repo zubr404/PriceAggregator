@@ -13,20 +13,28 @@ namespace PriceAggregator.Library.Extensions
     {
         public static decimal? GetPercentage(this IEnumerable<Candle> candles, int countTake)
         {
-            if (candles?.Count() > 0)
+            try
             {
-                var candlesCloses = candles.Where(x => x.IsClose);
-                if (candlesCloses?.Count() > 0)
+                if (candles?.Count() > 0)
                 {
-                    var candlesClosesSort = candlesCloses.OrderByDescending(x => x.TimeOpen).Take(countTake);
-                    if (candlesClosesSort.Count() == countTake)
+                    var candlesCloses = candles.Where(x => x.IsClose);
+                    if (candlesCloses?.Count() > 0)
                     {
-                        var open = candlesClosesSort.Last().Open;
-                        var close = candlesClosesSort.First().Close;
-                        var percentage = ((close - open) / open) * 100;
-                        return percentage;
+                        var candlesClosesSort = candlesCloses.OrderByDescending(x => x.TimeOpen).Take(countTake);
+                        if (candlesClosesSort.Count() == countTake)
+                        {
+                            var open = candlesClosesSort.Last().Open;
+                            var close = candlesClosesSort.First().Close;
+                            var percentage = ((close - open) / open) * 100;
+                            return percentage;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                // на случай исключения: коллекция была изменена...
+                // пока не знаю, как это обойти
             }
             return null;
         }

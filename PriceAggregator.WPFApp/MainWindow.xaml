@@ -8,11 +8,68 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <local:ModelView x:Key="ViewModel"/>
+
+        <SolidColorBrush x:Key="GridBack" Color="White"></SolidColorBrush>
+        <SolidColorBrush x:Key="GridFore" Color="Black"></SolidColorBrush>
     </Window.Resources>
     <Window.DataContext>
         <Binding Source="{StaticResource ViewModel}"/>
     </Window.DataContext>
     <Grid>
-        
+
+        <DataGrid Grid.Row="0" Width="Auto" VerticalScrollBarVisibility="Hidden" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding PercentageViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="10">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Background" Value="{StaticResource GridBack}" />
+                    <Setter Property="Height" Value="20"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#7F767676"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Beige"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="BorderThickness" Value="0,0,0.25,0"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource GridBack}"/>
+                    <Setter Property="Foreground" Value="{StaticResource GridFore}"/>
+                    <Style.Triggers>
+                        <!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="Yellow"/>
+                        </Trigger>-->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol" Width="Auto" Binding="{Binding Simbol}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1m" Width="*" Binding="{Binding Percentage1m}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="5m" Width="*" Binding="{Binding Percentage5m}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="15m" Width="*" Binding="{Binding Percentage15m}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="30m" Width="*" Binding="{Binding Percentage30m}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1h" Width="*" Binding="{Binding Percentage1h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3h" Width="*" Binding="{Binding Percentage3h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="6h" Width="*" Binding="{Binding Percentage6h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="12h" Width="*" Binding="{Binding Percentage12h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1d" Width="*" Binding="{Binding Percentage1d}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2d" Width="*" Binding="{Binding Percentage2d}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3d" Width="*" Binding="{Binding Percentage3d}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="5d" Width="*" Binding="{Binding Percentage5d}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1w" Width="*" Binding="{Binding Percentage1w}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2w" Width="*" Binding="{Binding Percentage2w}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1M" Width="*" Binding="{Binding Percentage1M}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2M" Width="*" Binding="{Binding Percentage2M}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3M" Width="*" Binding="{Binding Percentage3M}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="6M" Width="*" Binding="{Binding Percentage6M}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1Y" Width="*" Binding="{Binding Percentage1Y}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Window>
