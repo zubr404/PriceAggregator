@@ -42,6 +42,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\PercentageExtension.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentChange.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentDay2.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentDay5.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentFactory.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentHour3.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentMatchInterval.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentMonth2.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentMonth3.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentMonth6.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentService.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentWeekly2.cs" />
+    <Compile Include="GreenRedPercentage\GreenRedPercentYear1.cs" />
+    <Compile Include="Interfaces\IGreenRedPercent.cs" />
     <Compile Include="Interfaces\IPercentage.cs" />
     <Compile Include="Percentage\PercentageChange.cs" />
     <Compile Include="Percentage\PercentageChangeService.cs" />

@@ -59,6 +59,7 @@
     <Compile Include="ModelView.cs" />
     <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="Services\PercentageViewsService.cs" />
+    <Compile Include="ViewModels\GreenRedPercentView.cs" />
     <Compile Include="ViewModels\PercentageView.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -5,8 +5,10 @@ using PriceAggregator.WPFApp.Services;
 using PriceAggregator.WPFApp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -20,7 +22,7 @@ namespace PriceAggregator.WPFApp
         private readonly IRepository candlesRepository;
         private readonly PriceAggregatorManager priceAggregatorManager;
 
-        private readonly Timer timer;
+        private readonly System.Timers.Timer timer;
 
         private readonly PercentageViewsService percentageViewsService;
 
@@ -33,47 +35,55 @@ namespace PriceAggregator.WPFApp
             Application.Current.MainWindow.Closed += MainWindow_Closed;
             Application.Current.MainWindow.Initialized += MainWindow_Initialized;
 
-            timer = new Timer(1000);
+            timer = new System.Timers.Timer(5000);
             timer.Elapsed += Timer_Elapsed;
 
             percentageViewsService = new PercentageViewsService();
+            PercentageViews = new ObservableCollection<PercentageView>();
         }
 
-        public List<PercentageView> PercentageViews
-        {
-            get { return percentageViews; }
-            set
-            {
-                percentageViews = value;
-                base.NotifyPropertyChanged();
-            }
-        }
-        private List<PercentageView> percentageViews;
+        public ObservableCollection<PercentageView> PercentageViews { get; set; }
+
+        // test
+        private const int countSimbols = 10;
 
         private async Task calculatingStart()
         {
-            await dispatcher.InvokeAsync(async () =>
-            {
-                var simbols = priceAggregatorManager.Pairs.Take(100); // не должно быть из настроек
-                var intervals = KlineTimeframe.TimeframesForAggregator;
-                await priceAggregatorManager.RunAsync(simbols, intervals);
-            });
+            var simbols = priceAggregatorManager.Pairs;//.Take(countSimbols); // не должно быть из настроек
+            var intervals = KlineTimeframe.TimeframesForAggregator;
+            await priceAggregatorManager.RunAsync(simbols, intervals).ConfigureAwait(false);
         }
 
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            await dispatcher.InvokeAsync(async () =>
+
+            var simbols = priceAggregatorManager.Pairs;//.Take(countSimbols); // должно быть из настроек
+            var percentViews = await percentageViewsService.CreateViewModels(priceAggregatorManager.PercentageChanges, simbols).ConfigureAwait(false);
+            await dispatcher.InvokeAsync(() =>
             {
-                var simbols = priceAggregatorManager.Pairs.Take(100); // должно быть из настроек
-                PercentageViews = await percentageViewsService.CreateViewModels(priceAggregatorManager.PercentageChanges, simbols);
+                foreach (var percentView in percentViews)
+                {
+                    try
+                    {
+                        var p = PercentageViews.FirstOrDefault(x => x.Simbol == percentView.Simbol);
+                        PercentageViews.Remove(p);
+                        PercentageViews.Add(percentView);
+                    }
+                    catch { }
+                }
             });
         }
 
         #region Обработчики событий основного окна
         private async void MainWindow_Initialized(object sender, EventArgs e)
         {
-            await calculatingStart();
-            timer.Start();
+            MessageBox.Show("Start");
+            await Task.Run(async () =>
+            {
+                await calculatingStart().ConfigureAwait(false);
+                timer.Start();
+            });
+            //MessageBox.Show("Finish");
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)

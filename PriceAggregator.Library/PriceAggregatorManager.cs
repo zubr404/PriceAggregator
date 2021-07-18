@@ -2,6 +2,7 @@
 using Binance.DataSource.Kline;
 using Binance.StockExchange.Kline.REST;
 using Binance.StockExchange.Kline.WS;
+using PriceAggregator.Library.GreenRedPercentage;
 using PriceAggregator.Library.Percentage;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace PriceAggregator.Library
         private readonly KlineReceiver klineReceiver;
         private readonly KlineStreamManager klineStreamManager;
         private readonly PercentageChangeService percentageChangeService;
+        private readonly GreenRedPercentService greenRedPercentService;
         private readonly Thread threadPriceAggregator;
 
         private IEnumerable<string> simbols;
@@ -30,17 +32,21 @@ namespace PriceAggregator.Library
             klineReceiver = new KlineReceiver(repository);
             klineStreamManager = new KlineStreamManager(repository);
             percentageChangeService = new PercentageChangeService(repository);
+            greenRedPercentService = new GreenRedPercentService(repository);
             threadPriceAggregator = new Thread(processing);
             PercentageChanges = new List<PercentageChange>();
         }
 
         public IEnumerable<string> Pairs { get; private set; }
         public List<PercentageChange> PercentageChanges { get; private set; }
+        public List<GreenRedPercentChange> GreenRedPercentChanges { get; private set; }
 
         public async Task RunAsync(IEnumerable<string> simbols, IEnumerable<string> intervals)
         {
-            await klineStreamManager.ConnectStreams(simbols, KlineTimeframe.TimeframesAdaptive, CommonSettings.RESTART_STREAM_TIME, CommonSettings.INTERVAL_CHANNEL_RESTART);
-            await klineReceiver.Get(simbols, KlineTimeframe.TimeframesAdaptive);
+            var tasks = new List<Task>();
+            tasks.Add(klineStreamManager.ConnectStreams(simbols, KlineTimeframe.TimeframesAdaptive, CommonSettings.RESTART_STREAM_TIME, CommonSettings.INTERVAL_CHANNEL_RESTART));
+            tasks.Add(klineReceiver.Get(simbols, KlineTimeframe.TimeframesAdaptive));
+            await Task.WhenAll(tasks);
 
             //Console.ForegroundColor = ConsoleColor.Green;
             //Console.BackgroundColor = ConsoleColor.Yellow;
@@ -63,12 +69,8 @@ namespace PriceAggregator.Library
             while (true)
             {
                 PercentageChanges = percentageChangeService.GetPercentages(simbols, intervals);
-                //Console.WriteLine($"{DateTime.Now} PercentageChanges count = {PercentageChanges.Count}");
-                //foreach (var percentageChange in PercentageChanges)
-                //{
-                //    Console.WriteLine($"{DateTime.Now} {percentageChange.Simbol} {percentageChange.Interval} {percentageChange.Percentage}");
-                //}
-                Thread.Sleep(1000);
+                GreenRedPercentChanges = greenRedPercentService.GetPercentages(simbols, intervals);
+                Thread.Sleep(100);
             }
         }
     }

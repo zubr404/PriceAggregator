@@ -17,7 +17,7 @@
     </Window.DataContext>
     <Grid>
 
-        <DataGrid Grid.Row="0" Width="Auto" VerticalScrollBarVisibility="Hidden" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding PercentageViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="10">
+        <DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding PercentageViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Setter Property="Background" Value="{StaticResource GridBack}" />

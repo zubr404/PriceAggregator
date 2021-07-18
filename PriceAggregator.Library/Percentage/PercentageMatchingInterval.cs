@@ -37,11 +37,11 @@ namespace PriceAggregator.Library.Percentage
             };
         }
 
-        private decimal? getPercentage(IEnumerable<Candle> candles)
+        private decimal? getPercentage(IReadOnlyCollection<Candle> candles)
         {
             try
             {
-                if (candles?.Count() > 0)
+                if (candles?.Count > 0)
                 {
                     var candlesCloses = candles.Where(x => x.IsClose);
                     if (candlesCloses?.Count() > 0)
