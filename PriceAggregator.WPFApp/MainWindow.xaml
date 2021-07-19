@@ -17,7 +17,61 @@
     </Window.DataContext>
     <Grid>
 
-        <DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding PercentageViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
+        <!--<DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding PercentageViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Background" Value="{StaticResource GridBack}" />
+                    <Setter Property="Height" Value="20"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#7F767676"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Beige"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="BorderThickness" Value="0,0,0.25,0"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource GridBack}"/>
+                    <Setter Property="Foreground" Value="{StaticResource GridFore}"/>
+                    <Style.Triggers>
+                        --><!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="Yellow"/>
+                        </Trigger>--><!--
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol" Width="Auto" Binding="{Binding Simbol}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1m" Width="*" Binding="{Binding Percentage1m}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="5m" Width="*" Binding="{Binding Percentage5m}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="15m" Width="*" Binding="{Binding Percentage15m}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="30m" Width="*" Binding="{Binding Percentage30m}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1h" Width="*" Binding="{Binding Percentage1h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3h" Width="*" Binding="{Binding Percentage3h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="6h" Width="*" Binding="{Binding Percentage6h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="12h" Width="*" Binding="{Binding Percentage12h}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1d" Width="*" Binding="{Binding Percentage1d}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2d" Width="*" Binding="{Binding Percentage2d}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3d" Width="*" Binding="{Binding Percentage3d}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="5d" Width="*" Binding="{Binding Percentage5d}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1w" Width="*" Binding="{Binding Percentage1w}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2w" Width="*" Binding="{Binding Percentage2w}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1M" Width="*" Binding="{Binding Percentage1M}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2M" Width="*" Binding="{Binding Percentage2M}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3M" Width="*" Binding="{Binding Percentage3M}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="6M" Width="*" Binding="{Binding Percentage6M}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1Y" Width="*" Binding="{Binding Percentage1Y}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>-->
+
+        <DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding GreenRedPercentViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Setter Property="Background" Value="{StaticResource GridBack}" />
@@ -49,27 +103,65 @@
             </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Symbol" Width="Auto" Binding="{Binding Simbol}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="1m" Width="*" Binding="{Binding Percentage1m}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="5m" Width="*" Binding="{Binding Percentage5m}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="15m" Width="*" Binding="{Binding Percentage15m}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="30m" Width="*" Binding="{Binding Percentage30m}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="1h" Width="*" Binding="{Binding Percentage1h}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="3h" Width="*" Binding="{Binding Percentage3h}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="6h" Width="*" Binding="{Binding Percentage6h}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="12h" Width="*" Binding="{Binding Percentage12h}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="1d" Width="*" Binding="{Binding Percentage1d}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="2d" Width="*" Binding="{Binding Percentage2d}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="3d" Width="*" Binding="{Binding Percentage3d}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="5d" Width="*" Binding="{Binding Percentage5d}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="1w" Width="*" Binding="{Binding Percentage1w}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="2w" Width="*" Binding="{Binding Percentage2w}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="1M" Width="*" Binding="{Binding Percentage1M}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="2M" Width="*" Binding="{Binding Percentage2M}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="3M" Width="*" Binding="{Binding Percentage3M}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="6M" Width="*" Binding="{Binding Percentage6M}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="1Y" Width="*" Binding="{Binding Percentage1Y}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1mg" Width="*" Binding="{Binding Percentage1mg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1mr" Width="*" Binding="{Binding Percentage1mr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="5mg" Width="*" Binding="{Binding Percentage5mg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="5mr" Width="*" Binding="{Binding Percentage5mr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="15mg" Width="*" Binding="{Binding Percentage15mg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="15mr" Width="*" Binding="{Binding Percentage15mr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="30mg" Width="*" Binding="{Binding Percentage30mg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="30mr" Width="*" Binding="{Binding Percentage30mr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="1hg" Width="*" Binding="{Binding Percentage1hg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1hr" Width="*" Binding="{Binding Percentage1hr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="3hg" Width="*" Binding="{Binding Percentage3hg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3hr" Width="*" Binding="{Binding Percentage3hr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="6hg" Width="*" Binding="{Binding Percentage6hg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="6hr" Width="*" Binding="{Binding Percentage6hr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="12h" Width="*" Binding="{Binding Percentage12hg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="12h" Width="*" Binding="{Binding Percentage12hr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="1dg" Width="*" Binding="{Binding Percentage1dg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1dr" Width="*" Binding="{Binding Percentage1dr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="2dg" Width="*" Binding="{Binding Percentage2dg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2dr" Width="*" Binding="{Binding Percentage2dr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="3dg" Width="*" Binding="{Binding Percentage3dg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3dr" Width="*" Binding="{Binding Percentage3dr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="5dg" Width="*" Binding="{Binding Percentage5dg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="5dr" Width="*" Binding="{Binding Percentage5dr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="1wg" Width="*" Binding="{Binding Percentage1wg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1wr" Width="*" Binding="{Binding Percentage1wr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="2wg" Width="*" Binding="{Binding Percentage2wg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2wr" Width="*" Binding="{Binding Percentage2wr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="1Mg" Width="*" Binding="{Binding Percentage1Mg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1Mr" Width="*" Binding="{Binding Percentage1Mr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="2Mg" Width="*" Binding="{Binding Percentage2Mg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="2Mr" Width="*" Binding="{Binding Percentage2Mr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="3Mg" Width="*" Binding="{Binding Percentage3Mg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="3Mr" Width="*" Binding="{Binding Percentage3Mr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="6Mg" Width="*" Binding="{Binding Percentage6Mg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="6Mr" Width="*" Binding="{Binding Percentage6Mr}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="1Yg" Width="*" Binding="{Binding Percentage1Yg}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="1Yr" Width="*" Binding="{Binding Percentage1Yr}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
+
 
     </Grid>
 </Window>

@@ -25,6 +25,7 @@ namespace PriceAggregator.WPFApp
         private readonly System.Timers.Timer timer;
 
         private readonly PercentageViewsService percentageViewsService;
+        private readonly GreenRedPercentViewService greenRedPercentViewService;
 
         public ModelView()
         {
@@ -39,17 +40,20 @@ namespace PriceAggregator.WPFApp
             timer.Elapsed += Timer_Elapsed;
 
             percentageViewsService = new PercentageViewsService();
+            greenRedPercentViewService = new GreenRedPercentViewService();
             PercentageViews = new ObservableCollection<PercentageView>();
+            GreenRedPercentViews = new ObservableCollection<GreenRedPercentView>();
         }
 
         public ObservableCollection<PercentageView> PercentageViews { get; set; }
+        public ObservableCollection<GreenRedPercentView> GreenRedPercentViews { get; set; }
 
         // test
         private const int countSimbols = 10;
 
         private async Task calculatingStart()
         {
-            var simbols = priceAggregatorManager.Pairs;//.Take(countSimbols); // не должно быть из настроек
+            var simbols = priceAggregatorManager.Pairs.Take(countSimbols); // не должно быть из настроек
             var intervals = KlineTimeframe.TimeframesForAggregator;
             await priceAggregatorManager.RunAsync(simbols, intervals).ConfigureAwait(false);
         }
@@ -57,17 +61,35 @@ namespace PriceAggregator.WPFApp
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
 
-            var simbols = priceAggregatorManager.Pairs;//.Take(countSimbols); // должно быть из настроек
-            var percentViews = await percentageViewsService.CreateViewModels(priceAggregatorManager.PercentageChanges, simbols).ConfigureAwait(false);
+            var simbols = priceAggregatorManager.Pairs.Take(countSimbols); // должно быть из настроек
+
+            // percentage
+            //var percentViews = await percentageViewsService.CreateViewModels(priceAggregatorManager.PercentageChanges, simbols).ConfigureAwait(false);
+            //await dispatcher.InvokeAsync(() =>
+            //{
+            //    foreach (var percentView in percentViews)
+            //    {
+            //        try
+            //        {
+            //            var p = PercentageViews.FirstOrDefault(x => x.Simbol == percentView.Simbol);
+            //            PercentageViews.Remove(p);
+            //            PercentageViews.Add(percentView);
+            //        }
+            //        catch { }
+            //    }
+            //});
+
+            // green/red percentage
+            var greenRedPercentViews = await greenRedPercentViewService.CreateViewModels(priceAggregatorManager.GreenRedPercentChanges, simbols).ConfigureAwait(false);
             await dispatcher.InvokeAsync(() =>
             {
-                foreach (var percentView in percentViews)
+                foreach (var greenRedPercentView in greenRedPercentViews)
                 {
                     try
                     {
-                        var p = PercentageViews.FirstOrDefault(x => x.Simbol == percentView.Simbol);
-                        PercentageViews.Remove(p);
-                        PercentageViews.Add(percentView);
+                        var p = GreenRedPercentViews.FirstOrDefault(x => x.Simbol == greenRedPercentView.Simbol);
+                        GreenRedPercentViews.Remove(p);
+                        GreenRedPercentViews.Add(greenRedPercentView);
                     }
                     catch { }
                 }
