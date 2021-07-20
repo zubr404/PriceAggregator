@@ -71,7 +71,7 @@
             </DataGrid.Columns>
         </DataGrid>-->
 
-        <DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding GreenRedPercentViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
+        <!--<DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding GreenRedPercentViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Setter Property="Background" Value="{StaticResource GridBack}" />
@@ -92,9 +92,9 @@
                     <Setter Property="BorderBrush" Value="{StaticResource GridBack}"/>
                     <Setter Property="Foreground" Value="{StaticResource GridFore}"/>
                     <Style.Triggers>
-                        <!--<Trigger Property="IsMouseOver" Value="True">
+                        --><!--<Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="Yellow"/>
-                        </Trigger>-->
+                        </Trigger>--><!--
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="Transparent"/>
                         </Trigger>
@@ -160,8 +160,47 @@
                 <DataGridTextColumn Header="1Yg" Width="*" Binding="{Binding Percentage1Yg}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="1Yr" Width="*" Binding="{Binding Percentage1Yr}" IsReadOnly="True"/>
             </DataGrid.Columns>
-        </DataGrid>
+        </DataGrid>-->
 
+        <DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding VolatilityModelViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Background" Value="{StaticResource GridBack}" />
+                    <Setter Property="Height" Value="20"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#7F767676"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Beige"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="BorderThickness" Value="0,0,0.25,0"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource GridBack}"/>
+                    <Setter Property="Foreground" Value="{StaticResource GridFore}"/>
+                    <Style.Triggers>
+                        <!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="Yellow"/>
+                        </Trigger>-->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol" Width="Auto" Binding="{Binding Simbol}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="High" Width="*" Binding="{Binding High}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Low" Width="*" Binding="{Binding Low}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="CurrentPrice" Width="*" Binding="{Binding CurrentPrice}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PercentagePriceHigh" Width="*" Binding="{Binding PercentagePriceHigh}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PercentagePriceLow" Width="*" Binding="{Binding PercentagePriceLow}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>

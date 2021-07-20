@@ -26,6 +26,7 @@ namespace PriceAggregator.WPFApp
 
         private readonly PercentageViewsService percentageViewsService;
         private readonly GreenRedPercentViewService greenRedPercentViewService;
+        private readonly VolatilityTodayWiewService volatilityTodayWiewService;
 
         public ModelView()
         {
@@ -41,12 +42,16 @@ namespace PriceAggregator.WPFApp
 
             percentageViewsService = new PercentageViewsService();
             greenRedPercentViewService = new GreenRedPercentViewService();
+            volatilityTodayWiewService = new VolatilityTodayWiewService();
+
             PercentageViews = new ObservableCollection<PercentageView>();
             GreenRedPercentViews = new ObservableCollection<GreenRedPercentView>();
+            VolatilityModelViews = new ObservableCollection<VolatilityModelView>();
         }
 
         public ObservableCollection<PercentageView> PercentageViews { get; set; }
         public ObservableCollection<GreenRedPercentView> GreenRedPercentViews { get; set; }
+        public ObservableCollection<VolatilityModelView> VolatilityModelViews { get; set; }
 
         // test
         private const int countSimbols = 10;
@@ -80,16 +85,32 @@ namespace PriceAggregator.WPFApp
             //});
 
             // green/red percentage
-            var greenRedPercentViews = await greenRedPercentViewService.CreateViewModels(priceAggregatorManager.GreenRedPercentChanges, simbols).ConfigureAwait(false);
+            //var greenRedPercentViews = await greenRedPercentViewService.CreateViewModels(priceAggregatorManager.GreenRedPercentChanges, simbols).ConfigureAwait(false);
+            //await dispatcher.InvokeAsync(() =>
+            //{
+            //    foreach (var greenRedPercentView in greenRedPercentViews)
+            //    {
+            //        try
+            //        {
+            //            var p = GreenRedPercentViews.FirstOrDefault(x => x.Simbol == greenRedPercentView.Simbol);
+            //            GreenRedPercentViews.Remove(p);
+            //            GreenRedPercentViews.Add(greenRedPercentView);
+            //        }
+            //        catch { }
+            //    }
+            //});
+
+            // today volatility
+            var volatilityModelViews = await volatilityTodayWiewService.CreateViewModels(priceAggregatorManager.VolatilityTodayModels, simbols).ConfigureAwait(false);
             await dispatcher.InvokeAsync(() =>
             {
-                foreach (var greenRedPercentView in greenRedPercentViews)
+                foreach (var volatilityModelView in volatilityModelViews)
                 {
                     try
                     {
-                        var p = GreenRedPercentViews.FirstOrDefault(x => x.Simbol == greenRedPercentView.Simbol);
-                        GreenRedPercentViews.Remove(p);
-                        GreenRedPercentViews.Add(greenRedPercentView);
+                        var p = VolatilityModelViews.FirstOrDefault(x => x.Simbol == volatilityModelView.Simbol);
+                        VolatilityModelViews.Remove(p);
+                        VolatilityModelViews.Add(volatilityModelView);
                     }
                     catch { }
                 }
