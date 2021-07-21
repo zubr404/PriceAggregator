@@ -30,13 +30,15 @@ namespace PriceAggregator.Library.VolatilityToday
                         var candle = candles.FirstOrDefault(x => !x.IsClose);
                         if (candle != null)
                         {
-                            var volatility = new VolatilityModel();
-                            volatility.Simbol = simbol;
-                            volatility.High = candle.High;
-                            volatility.Low = candle.Low;
-                            volatility.CurrentPrice = candle.Close;
-                            volatility.PercentagePriceHigh = getPercentage(candle.High, candle.Close);
-                            volatility.PercentagePriceLow = getPercentage(candle.Low, candle.Close);
+                            var volatility = new VolatilityModel
+                            {
+                                Simbol = simbol,
+                                High = candle.High,
+                                Low = candle.Low,
+                                CurrentPrice = candle.Close,
+                                PercentagePriceHigh = getPercentage(candle.High, candle.Close),
+                                PercentagePriceLow = getPercentage(candle.Low, candle.Close)
+                            };
                             result.Add(volatility);
                         }
                     }

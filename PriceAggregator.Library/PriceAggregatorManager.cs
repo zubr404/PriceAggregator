@@ -5,6 +5,7 @@ using Binance.StockExchange.Kline.WS;
 using PriceAggregator.Library.GreenRedPercentage;
 using PriceAggregator.Library.Percentage;
 using PriceAggregator.Library.VolatilityToday;
+using PriceAggregator.Library.VolatilityWeekly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,12 @@ namespace PriceAggregator.Library
         private readonly ExchangeInfo exchangeInfo;
         private readonly KlineReceiver klineReceiver;
         private readonly KlineStreamManager klineStreamManager;
+
         private readonly PercentageChangeService percentageChangeService;
         private readonly GreenRedPercentService greenRedPercentService;
         private readonly VolatilityTodayService volatilityTodayService;
+        private readonly VolatilityWeeklyService volatilityWeeklyService;
+
         private readonly Thread threadPriceAggregator;
 
         private IEnumerable<string> simbols;
@@ -36,18 +40,21 @@ namespace PriceAggregator.Library
             percentageChangeService = new PercentageChangeService(repository);
             greenRedPercentService = new GreenRedPercentService(repository);
             volatilityTodayService = new VolatilityTodayService(repository);
+            volatilityWeeklyService = new VolatilityWeeklyService(repository);
 
             threadPriceAggregator = new Thread(processing);
 
             PercentageChanges = new List<PercentageChange>();
             GreenRedPercentChanges = new List<GreenRedPercentChange>();
             VolatilityTodayModels = new List<VolatilityModel>();
+            VolatilityWeeklyModels = new List<VolatilityWeeklyModel>();
         }
 
         public IEnumerable<string> Pairs { get; private set; }
         public List<PercentageChange> PercentageChanges { get; private set; }
         public List<GreenRedPercentChange> GreenRedPercentChanges { get; private set; }
         public List<VolatilityModel> VolatilityTodayModels { get; private set; }
+        public List<VolatilityWeeklyModel> VolatilityWeeklyModels { get; private set; }
 
         public async Task RunAsync(IEnumerable<string> simbols, IEnumerable<string> intervals)
         {
@@ -79,6 +86,7 @@ namespace PriceAggregator.Library
                 PercentageChanges = percentageChangeService.GetPercentages(simbols, intervals);
                 GreenRedPercentChanges = greenRedPercentService.GetPercentages(simbols, intervals);
                 VolatilityTodayModels = volatilityTodayService.GetVolatilites(simbols);
+                VolatilityWeeklyModels = volatilityWeeklyService.GetVolatilites(simbols);
                 Thread.Sleep(100);
             }
         }
