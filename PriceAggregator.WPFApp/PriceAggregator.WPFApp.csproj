@@ -61,9 +61,11 @@
     <Compile Include="Services\GreenRedPercentViewService.cs" />
     <Compile Include="Services\PercentageViewsService.cs" />
     <Compile Include="Services\VolatilityTodayWiewService.cs" />
+    <Compile Include="Services\VolatilityWeeklyViewService.cs" />
     <Compile Include="ViewModels\GreenRedPercentView.cs" />
     <Compile Include="ViewModels\PercentageView.cs" />
-    <Compile Include="ViewModels\VolatilityModelView.cs" />
+    <Compile Include="ViewModels\VolatilityTodayView.cs" />
+    <Compile Include="ViewModels\VolatilityWeeklyView.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

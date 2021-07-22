@@ -11,9 +11,9 @@ namespace PriceAggregator.WPFApp.Services
 {
     class VolatilityTodayWiewService
     {
-        public async Task<List<VolatilityModelView>> CreateViewModels(IEnumerable<VolatilityModel> volatilityModels, IEnumerable<string> simbols)
+        public async Task<List<VolatilityTodayView>> CreateViewModels(IEnumerable<VolatilityTodayModel> volatilityModels, IEnumerable<string> simbols)
         {
-            var result = new List<VolatilityModelView>();
+            var result = new List<VolatilityTodayView>();
             await Task.Run(() =>
             {
                 if (simbols?.Count() > 0)
@@ -25,7 +25,7 @@ namespace PriceAggregator.WPFApp.Services
                             var volatilityModel = volatilityModels.FirstOrDefault(x => x.Simbol == simbol);
                             if (volatilityModel != null)
                             {
-                                result.Add(new VolatilityModelView()
+                                result.Add(new VolatilityTodayView()
                                 {
                                     Simbol = volatilityModel.Simbol,
                                     High = getPercentage(volatilityModel.High, 15),

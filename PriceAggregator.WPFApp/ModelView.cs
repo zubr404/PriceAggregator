@@ -27,6 +27,7 @@ namespace PriceAggregator.WPFApp
         private readonly PercentageViewsService percentageViewsService;
         private readonly GreenRedPercentViewService greenRedPercentViewService;
         private readonly VolatilityTodayWiewService volatilityTodayWiewService;
+        private readonly VolatilityWeeklyViewService volatilityWeeklyViewService;
 
         public ModelView()
         {
@@ -43,15 +44,18 @@ namespace PriceAggregator.WPFApp
             percentageViewsService = new PercentageViewsService();
             greenRedPercentViewService = new GreenRedPercentViewService();
             volatilityTodayWiewService = new VolatilityTodayWiewService();
+            volatilityWeeklyViewService = new VolatilityWeeklyViewService();
 
             PercentageViews = new ObservableCollection<PercentageView>();
             GreenRedPercentViews = new ObservableCollection<GreenRedPercentView>();
-            VolatilityModelViews = new ObservableCollection<VolatilityModelView>();
+            VolatilityTodayViews = new ObservableCollection<VolatilityTodayView>();
+            VolatilityWeeklyViews = new ObservableCollection<VolatilityWeeklyView>();
         }
 
         public ObservableCollection<PercentageView> PercentageViews { get; set; }
         public ObservableCollection<GreenRedPercentView> GreenRedPercentViews { get; set; }
-        public ObservableCollection<VolatilityModelView> VolatilityModelViews { get; set; }
+        public ObservableCollection<VolatilityTodayView> VolatilityTodayViews { get; set; }
+        public ObservableCollection<VolatilityWeeklyView> VolatilityWeeklyViews { get; set; }
 
         // test
         private const int countSimbols = 10;
@@ -101,16 +105,32 @@ namespace PriceAggregator.WPFApp
             //});
 
             // today volatility
-            var volatilityModelViews = await volatilityTodayWiewService.CreateViewModels(priceAggregatorManager.VolatilityTodayModels, simbols).ConfigureAwait(false);
+            //var volatilityTodaylViews = await volatilityTodayWiewService.CreateViewModels(priceAggregatorManager.VolatilityTodayModels, simbols).ConfigureAwait(false);
+            //await dispatcher.InvokeAsync(() =>
+            //{
+            //    foreach (var volatilityModelView in volatilityTodaylViews)
+            //    {
+            //        try
+            //        {
+            //            var p = VolatilityTodayViews.FirstOrDefault(x => x.Simbol == volatilityModelView.Simbol);
+            //            VolatilityTodayViews.Remove(p);
+            //            VolatilityTodayViews.Add(volatilityModelView);
+            //        }
+            //        catch { }
+            //    }
+            //});
+
+            // wekly volatility
+            var volatitlityWeeklyViews = await volatilityWeeklyViewService.CreateViewModels(priceAggregatorManager.VolatilityWeeklyModels, simbols).ConfigureAwait(false);
             await dispatcher.InvokeAsync(() =>
             {
-                foreach (var volatilityModelView in volatilityModelViews)
+                foreach (var volatitlityWeeklyView in volatitlityWeeklyViews)
                 {
                     try
                     {
-                        var p = VolatilityModelViews.FirstOrDefault(x => x.Simbol == volatilityModelView.Simbol);
-                        VolatilityModelViews.Remove(p);
-                        VolatilityModelViews.Add(volatilityModelView);
+                        var p = VolatilityWeeklyViews.FirstOrDefault(x => x.Simbol == volatitlityWeeklyView.Simbol);
+                        VolatilityWeeklyViews.Remove(p);
+                        VolatilityWeeklyViews.Add(volatitlityWeeklyView);
                     }
                     catch { }
                 }

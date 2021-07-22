@@ -70,7 +70,7 @@
     <Compile Include="Percentage\PercentageYear1.cs" />
     <Compile Include="PriceAggregatorManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VolatilityToday\VolatilityModel.cs" />
+    <Compile Include="VolatilityToday\VolatilityTodayModel.cs" />
     <Compile Include="VolatilityToday\VolatilityTodayService.cs" />
     <Compile Include="VolatilityWeekly\VolatilityDayModel.cs" />
     <Compile Include="VolatilityWeekly\VolatilityWeeklyModel.cs" />

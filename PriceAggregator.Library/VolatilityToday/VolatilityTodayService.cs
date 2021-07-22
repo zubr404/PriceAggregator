@@ -17,9 +17,9 @@ namespace PriceAggregator.Library.VolatilityToday
             this.repository = repository;
         }
 
-        public List<VolatilityModel> GetVolatilites(IEnumerable<string> simbols)
+        public List<VolatilityTodayModel> GetVolatilites(IEnumerable<string> simbols)
         {
-            var result = new List<VolatilityModel>();
+            var result = new List<VolatilityTodayModel>();
             if (simbols?.Count() > 0)
             {
                 foreach (var simbol in simbols)
@@ -30,7 +30,7 @@ namespace PriceAggregator.Library.VolatilityToday
                         var candle = candles.FirstOrDefault(x => !x.IsClose);
                         if (candle != null)
                         {
-                            var volatility = new VolatilityModel
+                            var volatility = new VolatilityTodayModel
                             {
                                 Simbol = simbol,
                                 High = candle.High,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PriceAggregator.Library.VolatilityToday
 {
-    public class VolatilityModel
+    public class VolatilityTodayModel
     {
         public string Simbol { get; set; }
         public decimal High { get; set; }

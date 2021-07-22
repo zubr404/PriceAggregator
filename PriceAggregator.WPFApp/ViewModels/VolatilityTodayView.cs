@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PriceAggregator.WPFApp.ViewModels
 {
-    public class VolatilityModelView
+    public class VolatilityTodayView
     {
         public string Simbol { get; set; }
         public string High { get; set; }

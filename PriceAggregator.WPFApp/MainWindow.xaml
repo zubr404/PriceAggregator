@@ -162,7 +162,47 @@
             </DataGrid.Columns>
         </DataGrid>-->
 
-        <DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding VolatilityModelViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
+        <!--<DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding VolatilityTodayViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Background" Value="{StaticResource GridBack}" />
+                    <Setter Property="Height" Value="20"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#7F767676"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Beige"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="BorderThickness" Value="0,0,0.25,0"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource GridBack}"/>
+                    <Setter Property="Foreground" Value="{StaticResource GridFore}"/>
+                    <Style.Triggers>
+                        --><!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="Yellow"/>
+                        </Trigger>--><!--
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol" Width="Auto" Binding="{Binding Simbol}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="High" Width="*" Binding="{Binding High}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Low" Width="*" Binding="{Binding Low}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="CurrentPrice" Width="*" Binding="{Binding CurrentPrice}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PercentagePriceHigh" Width="*" Binding="{Binding PercentagePriceHigh}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PercentagePriceLow" Width="*" Binding="{Binding PercentagePriceLow}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>-->
+
+        <DataGrid Grid.Row="0" Margin="3" Width="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" CanUserAddRows="False" BorderThickness="0" RowHeaderWidth="0" ItemsSource="{Binding VolatilityWeeklyViews}" GridLinesVisibility="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" VerticalGridLinesBrush="Transparent" RenderOptions.EdgeMode="Unspecified" FontSize="12">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Setter Property="Background" Value="{StaticResource GridBack}" />
@@ -194,11 +234,37 @@
             </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Symbol" Width="Auto" Binding="{Binding Simbol}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="High" Width="*" Binding="{Binding High}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Low" Width="*" Binding="{Binding Low}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="CurrentPrice" Width="*" Binding="{Binding CurrentPrice}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="PercentagePriceHigh" Width="*" Binding="{Binding PercentagePriceHigh}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="PercentagePriceLow" Width="*" Binding="{Binding PercentagePriceLow}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="HD1" Width="*" Binding="{Binding HighDay1}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="LD1" Width="*" Binding="{Binding LowDay1}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PD1" Width="Auto" Binding="{Binding PercentageDay1}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="HD2" Width="*" Binding="{Binding HighDay2}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="LD2" Width="*" Binding="{Binding LowDay2}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PD2" Width="Auto" Binding="{Binding PercentageDay2}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="HD3" Width="*" Binding="{Binding HighDay3}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="LD3" Width="*" Binding="{Binding LowDay3}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PD3" Width="Auto" Binding="{Binding PercentageDay3}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="HD4" Width="*" Binding="{Binding HighDay4}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="LD4" Width="*" Binding="{Binding LowDay4}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PD4" Width="Auto" Binding="{Binding PercentageDay4}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="HD5" Width="*" Binding="{Binding HighDay5}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="LD5" Width="*" Binding="{Binding LowDay5}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PD5" Width="Auto" Binding="{Binding PercentageDay5}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="HD6" Width="*" Binding="{Binding HighDay6}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="LD6" Width="*" Binding="{Binding LowDay6}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PD6" Width="Auto" Binding="{Binding PercentageDay6}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="HD7" Width="*" Binding="{Binding HighDay7}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="LD7" Width="*" Binding="{Binding LowDay7}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PD7" Width="Auto" Binding="{Binding PercentageDay7}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="HW" Width="*" Binding="{Binding HighWeekly}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="LW" Width="*" Binding="{Binding LowWeekly}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="PW" Width="Auto" Binding="{Binding PercentageWeekly}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -46,14 +46,14 @@ namespace PriceAggregator.Library
 
             PercentageChanges = new List<PercentageChange>();
             GreenRedPercentChanges = new List<GreenRedPercentChange>();
-            VolatilityTodayModels = new List<VolatilityModel>();
+            VolatilityTodayModels = new List<VolatilityTodayModel>();
             VolatilityWeeklyModels = new List<VolatilityWeeklyModel>();
         }
 
         public IEnumerable<string> Pairs { get; private set; }
         public List<PercentageChange> PercentageChanges { get; private set; }
         public List<GreenRedPercentChange> GreenRedPercentChanges { get; private set; }
-        public List<VolatilityModel> VolatilityTodayModels { get; private set; }
+        public List<VolatilityTodayModel> VolatilityTodayModels { get; private set; }
         public List<VolatilityWeeklyModel> VolatilityWeeklyModels { get; private set; }
 
         public async Task RunAsync(IEnumerable<string> simbols, IEnumerable<string> intervals)
