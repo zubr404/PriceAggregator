@@ -29,6 +29,8 @@ namespace PriceAggregator.WPFApp
         private readonly VolatilityTodayWiewService volatilityTodayWiewService;
         private readonly VolatilityWeeklyViewService volatilityWeeklyViewService;
 
+        public ScreenManager ScreenManager { get; set; }
+
         public ModelView()
         {
             dispatcher = Dispatcher.CurrentDispatcher;
@@ -50,6 +52,8 @@ namespace PriceAggregator.WPFApp
             GreenRedPercentViews = new ObservableCollection<GreenRedPercentView>();
             VolatilityTodayViews = new ObservableCollection<VolatilityTodayView>();
             VolatilityWeeklyViews = new ObservableCollection<VolatilityWeeklyView>();
+
+            ScreenManager = new ScreenManager();
         }
 
         public ObservableCollection<PercentageView> PercentageViews { get; set; }
@@ -73,68 +77,108 @@ namespace PriceAggregator.WPFApp
             var simbols = priceAggregatorManager.Pairs.Take(countSimbols); // должно быть из настроек
 
             // percentage
-            //var percentViews = await percentageViewsService.CreateViewModels(priceAggregatorManager.PercentageChanges, simbols).ConfigureAwait(false);
-            //await dispatcher.InvokeAsync(() =>
-            //{
-            //    foreach (var percentView in percentViews)
-            //    {
-            //        try
-            //        {
-            //            var p = PercentageViews.FirstOrDefault(x => x.Simbol == percentView.Simbol);
-            //            PercentageViews.Remove(p);
-            //            PercentageViews.Add(percentView);
-            //        }
-            //        catch { }
-            //    }
-            //});
+            if (ScreenManager.IsEnabledPecentageScreen == Visibility.Visible)
+            {
+                var percentViews = await percentageViewsService.CreateViewModels(priceAggregatorManager.PercentageChanges, simbols).ConfigureAwait(false);
+                await dispatcher.InvokeAsync(() =>
+                {
+                    foreach (var percentView in percentViews)
+                    {
+                        try
+                        {
+                            var p = PercentageViews.FirstOrDefault(x => x.Simbol == percentView.Simbol);
+                            PercentageViews.Remove(p);
+                            PercentageViews.Add(percentView);
+                        }
+                        catch { }
+                    }
+                });
+            }
+            else
+            {
+                await dispatcher.InvokeAsync(() =>
+                {
+                    PercentageViews.Clear();
+                });
+            }
 
             // green/red percentage
-            //var greenRedPercentViews = await greenRedPercentViewService.CreateViewModels(priceAggregatorManager.GreenRedPercentChanges, simbols).ConfigureAwait(false);
-            //await dispatcher.InvokeAsync(() =>
-            //{
-            //    foreach (var greenRedPercentView in greenRedPercentViews)
-            //    {
-            //        try
-            //        {
-            //            var p = GreenRedPercentViews.FirstOrDefault(x => x.Simbol == greenRedPercentView.Simbol);
-            //            GreenRedPercentViews.Remove(p);
-            //            GreenRedPercentViews.Add(greenRedPercentView);
-            //        }
-            //        catch { }
-            //    }
-            //});
+            if (ScreenManager.IsEnabledGreenRedScreen == Visibility.Visible)
+            {
+                var greenRedPercentViews = await greenRedPercentViewService.CreateViewModels(priceAggregatorManager.GreenRedPercentChanges, simbols).ConfigureAwait(false);
+                await dispatcher.InvokeAsync(() =>
+                {
+                    foreach (var greenRedPercentView in greenRedPercentViews)
+                    {
+                        try
+                        {
+                            var p = GreenRedPercentViews.FirstOrDefault(x => x.Simbol == greenRedPercentView.Simbol);
+                            GreenRedPercentViews.Remove(p);
+                            GreenRedPercentViews.Add(greenRedPercentView);
+                        }
+                        catch { }
+                    }
+                });
+            }
+            else
+            {
+                await dispatcher.InvokeAsync(() =>
+                {
+                    GreenRedPercentViews.Clear();
+                });
+            }
 
             // today volatility
-            //var volatilityTodaylViews = await volatilityTodayWiewService.CreateViewModels(priceAggregatorManager.VolatilityTodayModels, simbols).ConfigureAwait(false);
-            //await dispatcher.InvokeAsync(() =>
-            //{
-            //    foreach (var volatilityModelView in volatilityTodaylViews)
-            //    {
-            //        try
-            //        {
-            //            var p = VolatilityTodayViews.FirstOrDefault(x => x.Simbol == volatilityModelView.Simbol);
-            //            VolatilityTodayViews.Remove(p);
-            //            VolatilityTodayViews.Add(volatilityModelView);
-            //        }
-            //        catch { }
-            //    }
-            //});
+            if (ScreenManager.IsEnabledVolatilityTodayScreen == Visibility.Visible)
+            {
+                var volatilityTodaylViews = await volatilityTodayWiewService.CreateViewModels(priceAggregatorManager.VolatilityTodayModels, simbols).ConfigureAwait(false);
+                await dispatcher.InvokeAsync(() =>
+                {
+                    foreach (var volatilityModelView in volatilityTodaylViews)
+                    {
+                        try
+                        {
+                            var p = VolatilityTodayViews.FirstOrDefault(x => x.Simbol == volatilityModelView.Simbol);
+                            VolatilityTodayViews.Remove(p);
+                            VolatilityTodayViews.Add(volatilityModelView);
+                        }
+                        catch { }
+                    }
+                });
+            }
+            else
+            {
+                await dispatcher.InvokeAsync(() =>
+                {
+                    VolatilityTodayViews.Clear();
+                });
+            }
 
             // wekly volatility
-            var volatitlityWeeklyViews = await volatilityWeeklyViewService.CreateViewModels(priceAggregatorManager.VolatilityWeeklyModels, simbols).ConfigureAwait(false);
-            await dispatcher.InvokeAsync(() =>
+            if (ScreenManager.IsEnabledVolatilityWeeklyScreen == Visibility.Visible)
             {
-                foreach (var volatitlityWeeklyView in volatitlityWeeklyViews)
+                var volatitlityWeeklyViews = await volatilityWeeklyViewService.CreateViewModels(priceAggregatorManager.VolatilityWeeklyModels, simbols).ConfigureAwait(false);
+                await dispatcher.InvokeAsync(() =>
                 {
-                    try
+                    foreach (var volatitlityWeeklyView in volatitlityWeeklyViews)
                     {
-                        var p = VolatilityWeeklyViews.FirstOrDefault(x => x.Simbol == volatitlityWeeklyView.Simbol);
-                        VolatilityWeeklyViews.Remove(p);
-                        VolatilityWeeklyViews.Add(volatitlityWeeklyView);
+                        try
+                        {
+                            var p = VolatilityWeeklyViews.FirstOrDefault(x => x.Simbol == volatitlityWeeklyView.Simbol);
+                            VolatilityWeeklyViews.Remove(p);
+                            VolatilityWeeklyViews.Add(volatitlityWeeklyView);
+                        }
+                        catch { }
                     }
-                    catch { }
-                }
-            });
+                });
+            }
+            else
+            {
+                await dispatcher.InvokeAsync(() =>
+                {
+                    VolatilityWeeklyViews.Clear();
+                });
+            }
         }
 
         #region Обработчики событий основного окна
