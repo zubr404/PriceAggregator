@@ -29,7 +29,8 @@ namespace PriceAggregator.WPFApp
         private readonly VolatilityTodayWiewService volatilityTodayWiewService;
         private readonly VolatilityWeeklyViewService volatilityWeeklyViewService;
 
-        public ScreenManager ScreenManager { get; set; }
+        public ScreenManager ScreenManager { get; private set; }
+        public SettingsScreen SettingsScreen { get; private set; }
 
         public ModelView()
         {
@@ -54,6 +55,11 @@ namespace PriceAggregator.WPFApp
             VolatilityWeeklyViews = new ObservableCollection<VolatilityWeeklyView>();
 
             ScreenManager = new ScreenManager();
+            SettingsScreen = new SettingsScreen(priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS),
+                PercentageViews,
+                GreenRedPercentViews,
+                VolatilityTodayViews,
+                VolatilityWeeklyViews); // !!! del Take
         }
 
         public ObservableCollection<PercentageView> PercentageViews { get; set; }
@@ -62,19 +68,18 @@ namespace PriceAggregator.WPFApp
         public ObservableCollection<VolatilityWeeklyView> VolatilityWeeklyViews { get; set; }
 
         // test
-        private const int countSimbols = 10;
+        private const int COUNT_SIMBOLS = 10;
 
         private async Task calculatingStart()
         {
-            var simbols = priceAggregatorManager.Pairs.Take(countSimbols); // не должно быть из настроек
+            var simbols = priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS); // не должно быть из настроек
             var intervals = KlineTimeframe.TimeframesForAggregator;
             await priceAggregatorManager.RunAsync(simbols, intervals).ConfigureAwait(false);
         }
 
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-
-            var simbols = priceAggregatorManager.Pairs.Take(countSimbols); // должно быть из настроек
+            var simbols = SettingsScreen.SimbolViews.Where(x => x.IsSelected)?.Select(x => x.Simbol);//priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS); // должно быть из настроек
 
             // percentage
             if (ScreenManager.IsEnabledPecentageScreen == Visibility.Visible)
@@ -184,7 +189,7 @@ namespace PriceAggregator.WPFApp
         #region Обработчики событий основного окна
         private async void MainWindow_Initialized(object sender, EventArgs e)
         {
-            MessageBox.Show("Start");
+            //MessageBox.Show("Start");
             await Task.Run(async () =>
             {
                 await calculatingStart().ConfigureAwait(false);

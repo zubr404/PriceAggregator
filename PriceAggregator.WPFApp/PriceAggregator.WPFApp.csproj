@@ -64,7 +64,9 @@
     <Compile Include="Services\PercentageViewsService.cs" />
     <Compile Include="Services\VolatilityTodayWiewService.cs" />
     <Compile Include="Services\VolatilityWeeklyViewService.cs" />
+    <Compile Include="SettingsScreen.cs" />
     <Compile Include="ViewModels\GreenRedPercentView.cs" />
+    <Compile Include="ViewModels\SimbolView.cs" />
     <Compile Include="ViewModels\PercentageView.cs" />
     <Compile Include="ViewModels\VolatilityTodayView.cs" />
     <Compile Include="ViewModels\VolatilityWeeklyView.cs" />
