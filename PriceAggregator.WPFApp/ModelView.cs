@@ -55,7 +55,7 @@ namespace PriceAggregator.WPFApp
             VolatilityWeeklyViews = new ObservableCollection<VolatilityWeeklyView>();
 
             ScreenManager = new ScreenManager();
-            SettingsScreen = new SettingsScreen(priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS),
+            SettingsScreen = new SettingsScreen(priceAggregatorManager.Pairs,
                 PercentageViews,
                 GreenRedPercentViews,
                 VolatilityTodayViews,
@@ -72,7 +72,7 @@ namespace PriceAggregator.WPFApp
 
         private async Task calculatingStart()
         {
-            var simbols = priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS); // не должно быть из настроек
+            var simbols = priceAggregatorManager.Pairs;//.Take(COUNT_SIMBOLS); // не должно быть из настроек
             var intervals = KlineTimeframe.TimeframesForAggregator;
             await priceAggregatorManager.RunAsync(simbols, intervals).ConfigureAwait(false);
         }

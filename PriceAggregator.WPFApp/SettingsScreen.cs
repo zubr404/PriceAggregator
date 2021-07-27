@@ -58,6 +58,36 @@ namespace PriceAggregator.WPFApp
 
         public ObservableCollection<SimbolView> SimbolViews { get; set; }
 
+        public RelayCommand SelectAllSimbolsCommand
+        {
+            get
+            {
+                return selectAllSimbolsCommand ?? new RelayCommand((object o) =>
+                {
+                    foreach (var simbolView in SimbolViews)
+                    {
+                        simbolView.IsSelected = true;
+                    }
+                });
+            }
+        }
+        private RelayCommand selectAllSimbolsCommand;
+
+        public RelayCommand ClearAllSimbolsCommand
+        {
+            get
+            {
+                return clearAllSimbolsCommand ?? new RelayCommand((object o) =>
+                {
+                    foreach (var simbolView in SimbolViews)
+                    {
+                        simbolView.IsSelected = false;
+                    }
+                });
+            }
+        }
+        private RelayCommand clearAllSimbolsCommand;
+
         public RelayCommand SettingsOpenCommand
         {
             get
