@@ -28,6 +28,7 @@ namespace PriceAggregator.WPFApp
         private readonly GreenRedPercentViewService greenRedPercentViewService;
         private readonly VolatilityTodayWiewService volatilityTodayWiewService;
         private readonly VolatilityWeeklyViewService volatilityWeeklyViewService;
+        private readonly CommonSettings commonSettings;
 
         public ScreenManager ScreenManager { get; private set; }
         public SettingsScreen SettingsScreen { get; private set; }
@@ -53,13 +54,15 @@ namespace PriceAggregator.WPFApp
             GreenRedPercentViews = new ObservableCollection<GreenRedPercentView>();
             VolatilityTodayViews = new ObservableCollection<VolatilityTodayView>();
             VolatilityWeeklyViews = new ObservableCollection<VolatilityWeeklyView>();
+            commonSettings = new CommonSettings();
 
             ScreenManager = new ScreenManager();
             SettingsScreen = new SettingsScreen(priceAggregatorManager.Pairs,
                 PercentageViews,
                 GreenRedPercentViews,
                 VolatilityTodayViews,
-                VolatilityWeeklyViews); // !!! del Take
+                VolatilityWeeklyViews,
+                commonSettings); // !!! del Take
         }
 
         public ObservableCollection<PercentageView> PercentageViews { get; set; }

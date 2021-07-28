@@ -22,6 +22,11 @@ namespace PriceAggregator.ConsoleApp
 
         static void Main(string[] args)
         {
+            
+        }
+
+        private static void Test()
+        {
             try
             {
                 var timeStart = DateTime.Now;

@@ -1,4 +1,5 @@
-﻿using PriceAggregator.WPFApp.ViewModels;
+﻿using Binance.Common.Kline;
+using PriceAggregator.WPFApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,36 +16,29 @@ namespace PriceAggregator.WPFApp
         private readonly ObservableCollection<GreenRedPercentView> greenRedPercentViews;
         private readonly ObservableCollection<VolatilityTodayView> volatilityTodayViews;
         private readonly ObservableCollection<VolatilityWeeklyView> volatilityWeeklyViews;
+        private readonly CommonSettings commonSettings;
 
         public SettingsScreen(IEnumerable<string> simbols,
             ObservableCollection<PercentageView> percentageViews,
             ObservableCollection<GreenRedPercentView> greenRedPercentViews,
             ObservableCollection<VolatilityTodayView> volatilityTodayViews,
-            ObservableCollection<VolatilityWeeklyView> volatilityWeeklyViews)
+            ObservableCollection<VolatilityWeeklyView> volatilityWeeklyViews,
+            CommonSettings commonSettings)
         {
             this.percentageViews = percentageViews;
             this.greenRedPercentViews = greenRedPercentViews;
             this.volatilityTodayViews = volatilityTodayViews;
             this.volatilityWeeklyViews = volatilityWeeklyViews;
-            SimbolViews = new ObservableCollection<SimbolView>();
+            this.commonSettings = commonSettings;
+            SimbolViews = new ObservableCollection<SimbolSettingsView>();
             setSimbolsSettings(simbols);
+            Intervals = KlineTimeframe.TimeframesAll.ToList();
         }
 
-        private void setSimbolsSettings(IEnumerable<string> simbols)
-        {
-            if (simbols?.Count() > 0)
-            {
-                foreach (var simbol in simbols)
-                {
-                    SimbolViews.Add(new SimbolView()
-                    {
-                        Simbol = simbol,
-                        IsSelected = false
-                    });
-                }
-            }
-        }
+        public ObservableCollection<SimbolSettingsView> SimbolViews { get; set; }
+        public List<string> Intervals { set; get; }
 
+        #region Properties
         public Visibility IsVisibility
         {
             get { return isVisibility; }
@@ -56,8 +50,65 @@ namespace PriceAggregator.WPFApp
         }
         private Visibility isVisibility = Visibility.Collapsed;
 
-        public ObservableCollection<SimbolView> SimbolViews { get; set; }
+        public string SelectedInterval
+        {
+            get { return selectedInterval; }
+            set
+            {
+                selectedInterval = value;
+                base.NotifyPropertyChanged();
+            }
+        }
+        private string selectedInterval;
 
+        public decimal PercentageAlert
+        {
+            get { return percentageAlert; }
+            set
+            {
+                if (value < -100)
+                {
+                    percentageAlert = 100;
+                    base.NotifyPropertyChanged();
+                }
+                else if (value > 100000)
+                {
+                    percentageAlert = 100000;
+                    base.NotifyPropertyChanged();
+                }
+                else
+                {
+                    percentageAlert = value;
+                    base.NotifyPropertyChanged();
+                }
+            }
+        }
+        private decimal percentageAlert;
+
+        public string BotToken
+        {
+            get { return botToken; }
+            set
+            {
+                botToken = value;
+                base.NotifyPropertyChanged();
+            }
+        }
+        private string botToken;
+
+        public string ChatId
+        {
+            get { return chatId; }
+            set
+            {
+                chatId = value;
+                base.NotifyPropertyChanged();
+            }
+        }
+        private string chatId;
+        #endregion
+
+        #region Commands
         public RelayCommand SelectAllSimbolsCommand
         {
             get
@@ -111,9 +162,33 @@ namespace PriceAggregator.WPFApp
                     greenRedPercentViews.Clear();
                     volatilityTodayViews.Clear();
                     volatilityWeeklyViews.Clear();
+
+                    commonSettings.SetSelectedSimbols(SimbolViews.Where(x => x.IsSelected)?.Select(x => x.Simbol));
+                    commonSettings.SelectedInterval = SelectedInterval;
+                    commonSettings.SelectedPercentageAlert = PercentageAlert;
+                    commonSettings.BotToken = BotToken;
+                    commonSettings.ChatId = ChatId;
                 });
             }
         }
         private RelayCommand settingsCloseCommand;
+        #endregion
+
+        #region private methods
+        private void setSimbolsSettings(IEnumerable<string> simbols)
+        {
+            if (simbols?.Count() > 0)
+            {
+                foreach (var simbol in simbols)
+                {
+                    SimbolViews.Add(new SimbolSettingsView()
+                    {
+                        Simbol = simbol,
+                        IsSelected = false
+                    });
+                }
+            }
+        }
+        #endregion
     }
 }

@@ -36,8 +36,38 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="2" Margin="10,0,0,0" Width="Auto" HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label HorizontalAlignment="Center">Settings alert</Label>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Label Width="100">Interval</Label>
+                    <ComboBox Height="30" Width="100" VerticalAlignment="Top" ItemsSource="{Binding SettingsScreen.Intervals}" SelectedValue="{Binding SettingsScreen.SelectedInterval}"></ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Label Width="100">Percentage</Label>
+                    <TextBox Height="30" Width="100" VerticalAlignment="Top" Text="{Binding SettingsScreen.PercentageAlert, Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                    <Label Width="100">Bot token</Label>
+                    <TextBox Height="30" Width="300" VerticalAlignment="Top" Text="{Binding SettingsScreen.BotToken, Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                    <Label Width="100">Chat ID</Label>
+                    <TextBox Height="30" Width="100" VerticalAlignment="Top" Text="{Binding SettingsScreen.ChatId, Mode=TwoWay}"></TextBox>
+                </StackPanel>
+            </Grid>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,0,0,0">
                 <Button Height="30" Width="100" Command="{Binding SettingsScreen.SelectAllSimbolsCommand}">SELECT ALL</Button>
@@ -80,7 +110,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Button Grid.Row="1" Grid.Column="1" Height="30" Width="100" HorizontalAlignment="Right" Margin="5" Command="{Binding SettingsScreen.SettingsCloseCommand}">Close</Button>
+            <Button Grid.Row="1" Grid.Column="10" Height="30" Width="100" HorizontalAlignment="Right" Margin="5" Command="{Binding SettingsScreen.SettingsCloseCommand}">Close</Button>
         </Grid>
         
         

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PriceAggregator.WPFApp.ViewModels
 {
-    public class SimbolView : PropertyChangedBase
+    public class SimbolSettingsView : PropertyChangedBase
     {
         public string Simbol
         {
