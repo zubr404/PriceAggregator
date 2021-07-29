@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\IGreenRedPercent.cs" />
     <Compile Include="Interfaces\IPercentage.cs" />
     <Compile Include="Percentage\PercentageChange.cs" />
+    <Compile Include="Percentage\PercentageChangeComparer.cs" />
     <Compile Include="Percentage\PercentageChangeService.cs" />
     <Compile Include="Percentage\PercentageDay2.cs" />
     <Compile Include="Percentage\PercentageDay5.cs" />

@@ -1,4 +1,5 @@
-﻿using Binance.Common.Kline;
+﻿using Alerts;
+using Binance.Common.Kline;
 using Binance.DataSource.Kline;
 using PriceAggregator.Library;
 using PriceAggregator.WPFApp.Services;
@@ -29,6 +30,7 @@ namespace PriceAggregator.WPFApp
         private readonly VolatilityTodayWiewService volatilityTodayWiewService;
         private readonly VolatilityWeeklyViewService volatilityWeeklyViewService;
         private readonly CommonSettings commonSettings;
+        private readonly TelegramAlert telegramAlert;
 
         public ScreenManager ScreenManager { get; private set; }
         public SettingsScreen SettingsScreen { get; private set; }
@@ -55,9 +57,10 @@ namespace PriceAggregator.WPFApp
             VolatilityTodayViews = new ObservableCollection<VolatilityTodayView>();
             VolatilityWeeklyViews = new ObservableCollection<VolatilityWeeklyView>();
             commonSettings = new CommonSettings();
+            telegramAlert = new TelegramAlert(commonSettings, priceAggregatorManager);
 
             ScreenManager = new ScreenManager();
-            SettingsScreen = new SettingsScreen(priceAggregatorManager.Pairs,
+            SettingsScreen = new SettingsScreen(priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS),
                 PercentageViews,
                 GreenRedPercentViews,
                 VolatilityTodayViews,
@@ -75,7 +78,7 @@ namespace PriceAggregator.WPFApp
 
         private async Task calculatingStart()
         {
-            var simbols = priceAggregatorManager.Pairs;//.Take(COUNT_SIMBOLS); // не должно быть из настроек
+            var simbols = priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS); // не должно быть из настроек
             var intervals = KlineTimeframe.TimeframesForAggregator;
             await priceAggregatorManager.RunAsync(simbols, intervals).ConfigureAwait(false);
         }

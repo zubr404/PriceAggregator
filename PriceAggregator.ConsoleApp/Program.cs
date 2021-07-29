@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.IO;
 using PriceAggregator.Library;
+using Telegram.Bot;
 
 namespace PriceAggregator.ConsoleApp
 {
@@ -18,11 +19,21 @@ namespace PriceAggregator.ConsoleApp
         private static PriceAggregatorManager priceAggregatorManager = new PriceAggregatorManager(candlesRepository);
 
         private static IEnumerable<string> pairs;
+        private static IEnumerable<string> pairs1;
         private static IEnumerable<string> intervals;
 
         static void Main(string[] args)
         {
-            
+            try
+            {
+                var bot = new TelegramBotClient("1944112564:AAE_Y7s8etHN4sqF5q8micSx8HWrpWvzmqo");
+                var outMessage = bot.SendTextMessageAsync("-1001575328973", "ConsoleApp: Hello!").GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Console.Read();
         }
 
         private static void Test()

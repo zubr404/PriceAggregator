@@ -110,6 +110,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Alerts\Alerts.csproj">
+      <Project>{7ff7ed85-c1e2-49e9-87f0-c96bba50bcd9}</Project>
+      <Name>Alerts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Binance.Common.Kline\Binance.Common.Kline.csproj">
       <Project>{42f8fbcb-863a-4edf-a79a-02c2cea062a3}</Project>
       <Name>Binance.Common.Kline</Name>
