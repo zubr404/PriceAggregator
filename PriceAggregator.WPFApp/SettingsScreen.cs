@@ -33,6 +33,9 @@ namespace PriceAggregator.WPFApp
             SimbolViews = new ObservableCollection<SimbolSettingsView>();
             setSimbolsSettings(simbols);
             Intervals = KlineTimeframe.TimeframesAll.ToList();
+
+            BotToken = Properties.Settings.Default.BotToken;
+            ChatId = Properties.Settings.Default.ChatId;
         }
 
         public ObservableCollection<SimbolSettingsView> SimbolViews { get; set; }
@@ -105,7 +108,7 @@ namespace PriceAggregator.WPFApp
                 base.NotifyPropertyChanged();
             }
         }
-        private string chatId;
+        private string chatId;// = Properties.Settings.Default.ChatId;
         #endregion
 
         #region Commands
@@ -168,6 +171,10 @@ namespace PriceAggregator.WPFApp
                     commonSettings.SelectedPercentageAlert = PercentageAlert;
                     commonSettings.BotToken = BotToken;
                     commonSettings.ChatId = ChatId;
+
+                    Properties.Settings.Default.BotToken = BotToken;
+                    Properties.Settings.Default.ChatId = ChatId;
+                    Properties.Settings.Default.Save();
                 });
             }
         }
