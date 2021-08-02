@@ -59,14 +59,14 @@ namespace PriceAggregator.WPFApp.Services
             return result;
         }
 
-        private string getPercentage(IEnumerable<PercentageChange> percentageChanges, string interval)
+        private decimal? getPercentage(IEnumerable<PercentageChange> percentageChanges, string interval)
         {
             var percentageChange = percentageChanges.FirstOrDefault(x => x.Interval == interval);
             if (percentageChange != null)
             {
                 if (percentageChange.Percentage.HasValue)
                 {
-                    return percentageChange.Percentage.Value.DecimalToString(2);
+                    return Math.Round(percentageChange.Percentage.Value, 2); //.DecimalToString(2);
                 }
             }
             return null;

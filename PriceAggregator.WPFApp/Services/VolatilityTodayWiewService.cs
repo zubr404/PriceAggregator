@@ -42,11 +42,11 @@ namespace PriceAggregator.WPFApp.Services
             return result;
         }
 
-        private string getPercentage(decimal? percentage, int digits = 2)
+        private decimal? getPercentage(decimal? percentage, int digits = 2)
         {
             if (percentage.HasValue)
             {
-                return percentage.Value.DecimalToString(digits);
+                return Math.Round(percentage.Value, digits); //.DecimalToString(digits);
             }
             return null;
         }

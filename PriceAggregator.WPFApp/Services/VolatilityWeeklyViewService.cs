@@ -33,46 +33,46 @@ namespace PriceAggregator.WPFApp.Services
                                     switch (i)
                                     {
                                         case 0:
-                                            volatilityView.HighDay1 = volatilityDay.High.DecimalToString(15);
-                                            volatilityView.LowDay1 = volatilityDay.Low.DecimalToString(15);
+                                            volatilityView.HighDay1 = Math.Round(volatilityDay.High, 15);
+                                            volatilityView.LowDay1 = Math.Round(volatilityDay.Low, 15);
                                             volatilityView.PercentageDay1 = getPercentage(volatilityDay.Percentage);
                                             break;
                                         case 1:
-                                            volatilityView.HighDay2 = volatilityDay.High.DecimalToString(15);
-                                            volatilityView.LowDay2 = volatilityDay.Low.DecimalToString(15);
+                                            volatilityView.HighDay2 = Math.Round(volatilityDay.High, 15);
+                                            volatilityView.LowDay2 = Math.Round(volatilityDay.Low, 15);
                                             volatilityView.PercentageDay2 = getPercentage(volatilityDay.Percentage);
                                             break;
                                         case 2:
-                                            volatilityView.HighDay3 = volatilityDay.High.DecimalToString(15);
-                                            volatilityView.LowDay3 = volatilityDay.Low.DecimalToString(15);
+                                            volatilityView.HighDay3 = Math.Round(volatilityDay.High, 15);
+                                            volatilityView.LowDay3 = Math.Round(volatilityDay.Low, 15);
                                             volatilityView.PercentageDay3 = getPercentage(volatilityDay.Percentage);
                                             break;
                                         case 3:
-                                            volatilityView.HighDay4 = volatilityDay.High.DecimalToString(15);
-                                            volatilityView.LowDay4 = volatilityDay.Low.DecimalToString(15);
+                                            volatilityView.HighDay4 = Math.Round(volatilityDay.High, 15);
+                                            volatilityView.LowDay4 = Math.Round(volatilityDay.Low, 15);
                                             volatilityView.PercentageDay4 = getPercentage(volatilityDay.Percentage);
                                             break;
                                         case 4:
-                                            volatilityView.HighDay5 = volatilityDay.High.DecimalToString(15);
-                                            volatilityView.LowDay5 = volatilityDay.Low.DecimalToString(15);
+                                            volatilityView.HighDay5 = Math.Round(volatilityDay.High, 15);
+                                            volatilityView.LowDay5 = Math.Round(volatilityDay.Low, 15);
                                             volatilityView.PercentageDay5 = getPercentage(volatilityDay.Percentage);
                                             break;
                                         case 5:
-                                            volatilityView.HighDay6 = volatilityDay.High.DecimalToString(15);
-                                            volatilityView.LowDay6 = volatilityDay.Low.DecimalToString(15);
+                                            volatilityView.HighDay6 = Math.Round(volatilityDay.High, 15);
+                                            volatilityView.LowDay6 = Math.Round(volatilityDay.Low, 15);
                                             volatilityView.PercentageDay6 = getPercentage(volatilityDay.Percentage);
                                             break;
                                         case 6:
-                                            volatilityView.HighDay7 = volatilityDay.High.DecimalToString(15);
-                                            volatilityView.LowDay7 = volatilityDay.Low.DecimalToString(15);
+                                            volatilityView.HighDay7 = Math.Round(volatilityDay.High, 15);
+                                            volatilityView.LowDay7 = Math.Round(volatilityDay.Low, 15);
                                             volatilityView.PercentageDay7 = getPercentage(volatilityDay.Percentage);
                                             break;
                                         default:
                                             break;
                                     }
                                 }
-                                volatilityView.HighWeekly = volatilitySimbol.High.DecimalToString(15);
-                                volatilityView.LowWeekly = volatilitySimbol.Low.DecimalToString(15);
+                                volatilityView.HighWeekly = Math.Round(volatilitySimbol.High, 2); //.DecimalToString(15);
+                                volatilityView.LowWeekly = Math.Round(volatilitySimbol.Low, 2); //.DecimalToString(15);
                                 volatilityView.PercentageWeekly = getPercentage(volatilitySimbol.Percentage);
                                 result.Add(volatilityView);
                             }
@@ -83,11 +83,11 @@ namespace PriceAggregator.WPFApp.Services
             return result;
         }
 
-        private string getPercentage(decimal? percentage)
+        private decimal? getPercentage(decimal? percentage)
         {
             if (percentage.HasValue)
             {
-                return percentage.Value.DecimalToString(2);
+                return Math.Round(percentage.Value, 2); //.DecimalToString(2);
             }
             return null;
         }

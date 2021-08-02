@@ -9,29 +9,29 @@ namespace PriceAggregator.WPFApp.ViewModels
     public class VolatilityWeeklyView
     {
         public string Simbol { get; set; }
-        public string HighDay1 { get; set; }
-        public string LowDay1 { get; set; }
-        public string PercentageDay1 { get; set; }
-        public string HighDay2 { get; set; }
-        public string LowDay2 { get; set; }
-        public string PercentageDay2 { get; set; }
-        public string HighDay3 { get; set; }
-        public string LowDay3 { get; set; }
-        public string PercentageDay3 { get; set; }
-        public string HighDay4 { get; set; }
-        public string LowDay4 { get; set; }
-        public string PercentageDay4 { get; set; }
-        public string HighDay5 { get; set; }
-        public string LowDay5 { get; set; }
-        public string PercentageDay5 { get; set; }
-        public string HighDay6 { get; set; }
-        public string LowDay6 { get; set; }
-        public string PercentageDay6 { get; set; }
-        public string HighDay7 { get; set; }
-        public string LowDay7 { get; set; }
-        public string PercentageDay7 { get; set; }
-        public string HighWeekly { get; set; }
-        public string LowWeekly { get; set; }
-        public string PercentageWeekly { get; set; }
+        public decimal? HighDay1 { get; set; }
+        public decimal? LowDay1 { get; set; }
+        public decimal? PercentageDay1 { get; set; }
+        public decimal? HighDay2 { get; set; }
+        public decimal? LowDay2 { get; set; }
+        public decimal? PercentageDay2 { get; set; }
+        public decimal? HighDay3 { get; set; }
+        public decimal? LowDay3 { get; set; }
+        public decimal? PercentageDay3 { get; set; }
+        public decimal? HighDay4 { get; set; }
+        public decimal? LowDay4 { get; set; }
+        public decimal? PercentageDay4 { get; set; }
+        public decimal? HighDay5 { get; set; }
+        public decimal? LowDay5 { get; set; }
+        public decimal? PercentageDay5 { get; set; }
+        public decimal? HighDay6 { get; set; }
+        public decimal? LowDay6 { get; set; }
+        public decimal? PercentageDay6 { get; set; }
+        public decimal? HighDay7 { get; set; }
+        public decimal? LowDay7 { get; set; }
+        public decimal? PercentageDay7 { get; set; }
+        public decimal? HighWeekly { get; set; }
+        public decimal? LowWeekly { get; set; }
+        public decimal? PercentageWeekly { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace PriceAggregator.WPFApp.Services
                             {
                                 var percentageView = new GreenRedPercentView() { Simbol = simbol };
                                 var percentItem = percentageSimbol.FirstOrDefault(x => x.Interval == KlineTimeframe.minute1);
-                                percentageView.Percentage1mg = getPercentageGreen(percentItem, out string percentRed);
+                                percentageView.Percentage1mg = getPercentageGreen(percentItem, out decimal? percentRed);
                                 percentageView.Percentage1mr = percentRed;
                                 percentItem = percentageSimbol.FirstOrDefault(x => x.Interval == KlineTimeframe.minute5);
                                 percentageView.Percentage5mg = getPercentageGreen(percentItem, out percentRed);
@@ -93,7 +93,7 @@ namespace PriceAggregator.WPFApp.Services
             return result;
         }
 
-        private string getPercentageGreen(GreenRedPercentChange percentItem, out string percentRed)
+        private decimal? getPercentageGreen(GreenRedPercentChange percentItem, out decimal? percentRed)
         {
             percentRed = null;
             if (percentItem != null)
@@ -104,11 +104,11 @@ namespace PriceAggregator.WPFApp.Services
             return null;
         }
 
-        private string getPercentage(decimal? percentage)
+        private decimal? getPercentage(decimal? percentage)
         {
             if (percentage.HasValue)
             {
-                return percentage.Value.DecimalToString(2);
+                return Math.Round(percentage.Value, 2); //.DecimalToString(2);
             }
             return null;
         }
