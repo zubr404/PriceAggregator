@@ -161,7 +161,7 @@ namespace PriceAggregator.WPFApp
                 return settingsCloseCommand ?? new RelayCommand((object o) =>
                 {
                     IsVisibility = Visibility.Collapsed;
-                    percentageViews.Clear();
+                    //percentageViews.Clear();
                     greenRedPercentViews.Clear();
                     volatilityTodayViews.Clear();
                     volatilityWeeklyViews.Clear();

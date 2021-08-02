@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Extensions\ConverterValues.cs" />
+    <Compile Include="FilterManager.cs" />
     <Compile Include="ModelView.cs" />
     <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="RelayCommand.cs" />

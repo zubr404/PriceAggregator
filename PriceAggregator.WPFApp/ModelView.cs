@@ -7,6 +7,7 @@ using PriceAggregator.WPFApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -17,7 +18,7 @@ using System.Windows.Threading;
 
 namespace PriceAggregator.WPFApp
 {
-    public class ModelView : PropertyChangedBase
+    public class ModelView
     {
         private readonly Dispatcher dispatcher;
         private readonly IRepository candlesRepository;
@@ -33,6 +34,7 @@ namespace PriceAggregator.WPFApp
         private readonly TelegramAlert telegramAlert;
 
         public ScreenManager ScreenManager { get; private set; }
+        public FilterManager FilterManager { get; private set; }
         public SettingsScreen SettingsScreen { get; private set; }
 
         public ModelView()
@@ -60,7 +62,8 @@ namespace PriceAggregator.WPFApp
             telegramAlert = new TelegramAlert(commonSettings, priceAggregatorManager);
 
             ScreenManager = new ScreenManager();
-            SettingsScreen = new SettingsScreen(priceAggregatorManager.Pairs.Where(x => x.Contains("BTC")), //.Take(COUNT_SIMBOLS),
+            FilterManager = new FilterManager();
+            SettingsScreen = new SettingsScreen(new string[] { },//priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS),//.Where(x => x.Contains("BTC")), //.Take(COUNT_SIMBOLS),
                 PercentageViews,
                 GreenRedPercentViews,
                 VolatilityTodayViews,
@@ -73,19 +76,68 @@ namespace PriceAggregator.WPFApp
         public ObservableCollection<VolatilityTodayView> VolatilityTodayViews { get; set; }
         public ObservableCollection<VolatilityWeeklyView> VolatilityWeeklyViews { get; set; }
 
+        private string commonSimbolFilter = "";
+
         // test
         private const int COUNT_SIMBOLS = 10;
 
+        private IEnumerable<string> getSimbolsSettings()
+        {
+            if (commonSimbolFilter.ToUpper() == "ALL")
+            {
+                return priceAggregatorManager.Pairs;
+            }
+            else
+            {
+                return priceAggregatorManager.Pairs.Where(x => x.ToUpper().Contains(commonSimbolFilter.ToUpper()));
+            }
+        }
+
         private async Task calculatingStart()
         {
-            var simbols = priceAggregatorManager.Pairs.Where(x => x.Contains("BTC")); //.Take(COUNT_SIMBOLS); // не должно быть из настроек
+            var simbols = getSimbolsSettings(); // priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS);//.Where(x => x.Contains("BTC")); //.Take(COUNT_SIMBOLS); // не должно быть из настроек
             var intervals = KlineTimeframe.TimeframesForAggregator;
             await priceAggregatorManager.RunAsync(simbols, intervals).ConfigureAwait(false);
         }
 
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            var simbols = SettingsScreen.SimbolViews.Where(x => x.IsSelected)?.Select(x => x.Simbol);//priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS); // должно быть из настроек
+            //var simbols = SettingsScreen.SimbolViews.Where(x => x.IsSelected)?.Select(x => x.Simbol);//priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS); // должно быть из настроек
+
+            var simbols = getSimbolsSettings(); // priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS);
+            if (!FilterManager.IsEnabledFilter)
+            {
+                var viewSelectedSimbols = PercentageViews.Where(x => x.IsSelected);
+                if (viewSelectedSimbols?.Count() > 0)
+                {
+                    simbols = viewSelectedSimbols.Select(x => x.Simbol);
+
+                    if (!FilterManager.IsFilterApplied)
+                    {
+                        await dispatcher.InvokeAsync(() =>
+                        {
+                            for (int i = 0; i < PercentageViews.Count; i++)
+                            {
+                                if (!PercentageViews[i].IsSelected)
+                                {
+                                    PercentageViews.RemoveAt(i);
+                                    i--;
+                                }
+                            }
+                        });
+                        FilterManager.IsFilterApplied = true;
+                    }
+                }
+                else
+                {
+                    FilterManager.IsEnabledFilter = !FilterManager.IsEnabledFilter;
+                }
+            }
+            else
+            {
+                FilterManager.IsFilterApplied = false;
+            }
+            
 
             // percentage
             if (ScreenManager.IsEnabledPecentageScreen == Visibility.Visible)
@@ -98,18 +150,38 @@ namespace PriceAggregator.WPFApp
                         try
                         {
                             var p = PercentageViews.FirstOrDefault(x => x.Simbol == percentView.Simbol);
-                            PercentageViews.Remove(p);
-                            PercentageViews.Add(percentView);
+                            if (p == null)
+                            {
+                                PercentageViews.Add(percentView);
+                            }
+                            else
+                            {
+                                p.Percentage1m = percentView.Percentage1m;
+                                p.Percentage5m = percentView.Percentage5m;
+                                p.Percentage15m = percentView.Percentage15m;
+                                p.Percentage30m = percentView.Percentage30m;
+                                p.Percentage1h = percentView.Percentage1h;
+                                p.Percentage3h = percentView.Percentage3h;
+                                p.Percentage6h = percentView.Percentage6h;
+                                p.Percentage12h = percentView.Percentage12h;
+                                p.Percentage1d = percentView.Percentage1d;
+                                p.Percentage2d = percentView.Percentage2d;
+                                p.Percentage3d = percentView.Percentage3d;
+                                p.Percentage5d = percentView.Percentage5d;
+                                p.Percentage1w = percentView.Percentage1w;
+                                p.Percentage2w = percentView.Percentage2w;
+                                p.Percentage1M = percentView.Percentage1M;
+                                p.Percentage2M = percentView.Percentage2M;
+                                p.Percentage3M = percentView.Percentage3M;
+                                p.Percentage6M = percentView.Percentage6M;
+                                p.Percentage1Y = percentView.Percentage1Y;
+                            }
+
+                            //PercentageViews.Remove(p);
+                            //PercentageViews.Add(percentView);
                         }
                         catch { }
                     }
-                });
-            }
-            else
-            {
-                await dispatcher.InvokeAsync(() =>
-                {
-                    PercentageViews.Clear();
                 });
             }
 
@@ -195,7 +267,8 @@ namespace PriceAggregator.WPFApp
         #region Обработчики событий основного окна
         private async void MainWindow_Initialized(object sender, EventArgs e)
         {
-            //MessageBox.Show("Start");
+            commonSimbolFilter = ConfigurationManager.AppSettings["CommonFilter"];
+            //MessageBox.Show($"{commonSimbolFilter}");
             await Task.Run(async () =>
             {
                 await calculatingStart().ConfigureAwait(false);
