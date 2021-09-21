@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PriceAggregator.WPFApp.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,13 @@ namespace PriceAggregator.WPFApp
 {
     public class FilterManager : PropertyChangedBase
     {
+        private ObservableCollection<PercentageView> percentageViews;
+
+        public FilterManager(ObservableCollection<PercentageView> percentageViews)
+        {
+            this.percentageViews = percentageViews;
+        }
+
         public bool IsFilterApplied { get; set; }
 
         public bool IsEnabledFilter
@@ -57,5 +66,20 @@ namespace PriceAggregator.WPFApp
             }
         }
         private RelayCommand showAllCommand;
+
+        public RelayCommand FilterClearCommand
+        {
+            get
+            {
+                return filterClearCommand ?? new RelayCommand((object o) =>
+                {
+                    foreach (var percentageView in percentageViews)
+                    {
+                        percentageView.IsSelected = false;
+                    }
+                });
+            }
+        }
+        private RelayCommand filterClearCommand;
     }
 }

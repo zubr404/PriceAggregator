@@ -16,7 +16,7 @@ namespace Binance.DataSource.Kline
             dataContext = new DataContext();
             locker = new object();
         }
-        public DataOperationType CreateOrUpdate(Candle candle)
+        public DataOperationType CreateOrUpdate(Candle candle, bool fixedDepthHistory = true)
         {
             lock (locker)
             {
@@ -38,11 +38,14 @@ namespace Binance.DataSource.Kline
                         else
                         {
                             candles.Add(candle);
-                            if (candles.Count > CommonSettings.LIMIT_KLINES) // поддерживаем определенную глубину истории
+                            if (fixedDepthHistory)
                             {
-                                var minOpenTime = candles.Min(x => x.TimeOpen);
-                                var firstCandleIndex = candles.FindIndex(x => x.TimeOpen == minOpenTime);
-                                candles.RemoveAt(firstCandleIndex);
+                                if (candles.Count > CommonSettings.LIMIT_KLINES) // поддерживаем определенную глубину истории
+                                {
+                                    var minOpenTime = candles.Min(x => x.TimeOpen);
+                                    var firstCandleIndex = candles.FindIndex(x => x.TimeOpen == minOpenTime);
+                                    candles.RemoveAt(firstCandleIndex);
+                                }
                             }
                             return DataOperationType.Add;
                         }

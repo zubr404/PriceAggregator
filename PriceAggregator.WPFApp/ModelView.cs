@@ -62,7 +62,7 @@ namespace PriceAggregator.WPFApp
             telegramAlert = new TelegramAlert(commonSettings, priceAggregatorManager);
 
             ScreenManager = new ScreenManager();
-            FilterManager = new FilterManager();
+            FilterManager = new FilterManager(PercentageViews);
             SettingsScreen = new SettingsScreen(new string[] { },//priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS),//.Where(x => x.Contains("BTC")), //.Take(COUNT_SIMBOLS),
                 PercentageViews,
                 GreenRedPercentViews,
@@ -86,6 +86,10 @@ namespace PriceAggregator.WPFApp
             if (commonSimbolFilter.ToUpper() == "ALL")
             {
                 return priceAggregatorManager.Pairs;
+            }
+            else if (commonSimbolFilter.ToUpper() == "TEST")
+            {
+                return priceAggregatorManager.Pairs.Take(COUNT_SIMBOLS);
             }
             else
             {
@@ -176,9 +180,6 @@ namespace PriceAggregator.WPFApp
                                 p.Percentage6M = percentView.Percentage6M;
                                 p.Percentage1Y = percentView.Percentage1Y;
                             }
-
-                            //PercentageViews.Remove(p);
-                            //PercentageViews.Add(percentView);
                         }
                         catch { }
                     }

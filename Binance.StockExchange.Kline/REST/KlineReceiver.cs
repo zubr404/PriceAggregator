@@ -27,6 +27,16 @@ namespace Binance.StockExchange.Kline.REST
 
         public async Task Get(IEnumerable<string> pairs, IEnumerable<string> timeFrames)
         {
+            await klinesSave(pairs, timeFrames, CommonSettings.LIMIT_KLINES);
+        }
+
+        public async Task Get(IEnumerable<string> pairs, IEnumerable<string> timeFrames, int limitKlines, bool fixedDepthHistory)
+        {
+            await klinesSave(pairs, timeFrames, limitKlines, fixedDepthHistory);
+        }
+
+        private async Task klinesSave(IEnumerable<string> pairs, IEnumerable<string> timeFrames, int limitKlines, bool fixedDepthHistory = true)
+        {
             if (pairs?.Count() > 0)
             {
                 var tasks = new List<Task<List<Candle>>>();
@@ -40,7 +50,7 @@ namespace Binance.StockExchange.Kline.REST
                         {
                             Thread.Sleep(TIMEOUT_REQUEST_MS);
                         }
-                        tasks.Add(GetKlines(pair, interval, CommonSettings.LIMIT_KLINES));
+                        tasks.Add(GetKlines(pair, interval, limitKlines));
                         countRequest++;
                     }
                 }
@@ -50,7 +60,7 @@ namespace Binance.StockExchange.Kline.REST
                 {
                     foreach (var candle in task.Result)
                     {
-                        repository.CreateOrUpdate(candle);
+                        repository.CreateOrUpdate(candle, fixedDepthHistory);
                     }
                 }
             }

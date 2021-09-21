@@ -28,8 +28,9 @@
             <Button Width="100" Command="{Binding ScreenManager.VolatilityTodayScreenOpen}">Volatility today</Button>
             <Button Width="100" Command="{Binding ScreenManager.VolatilityWeeklyScreenOpen}">Volatility weekly</Button>
 
-            <Button Width="100" Margin="15,0,0,0" IsEnabled="{Binding FilterManager.IsEnabledFilter}" Command="{Binding FilterManager.FilterOnCommand}">Filter apply</Button>
-            <Button Width="100" IsEnabled="{Binding FilterManager.IsEnabledShowAll}" Command="{Binding FilterManager.ShowAllCommand}">Show all</Button>
+            <Button Width="80" Margin="15,0,0,0" IsEnabled="{Binding FilterManager.IsEnabledFilter}" Command="{Binding FilterManager.FilterOnCommand}">Filter apply</Button>
+            <Button Width="80" IsEnabled="{Binding FilterManager.IsEnabledShowAll}" Command="{Binding FilterManager.ShowAllCommand}">Show all</Button>
+            <Button Width="80" Command="{Binding FilterManager.FilterClearCommand}">Filter clear</Button>
         </StackPanel>
 
         <Grid Grid.Row="1" Background="White" Visibility="{Binding SettingsScreen.IsVisibility}" Panel.ZIndex="10">

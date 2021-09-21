@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceAggregator.Library", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alerts", "Alerts\Alerts.csproj", "{7FF7ED85-C1E2-49E9-87F0-C96BBA50BCD9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities.ChartHistoryLoader", "Utilities.ChartHistoryLoader\Utilities.ChartHistoryLoader.csproj", "{C19F556B-7B1F-455A-BD79-23A1ECC74535}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{7FF7ED85-C1E2-49E9-87F0-C96BBA50BCD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FF7ED85-C1E2-49E9-87F0-C96BBA50BCD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FF7ED85-C1E2-49E9-87F0-C96BBA50BCD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C19F556B-7B1F-455A-BD79-23A1ECC74535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C19F556B-7B1F-455A-BD79-23A1ECC74535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C19F556B-7B1F-455A-BD79-23A1ECC74535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C19F556B-7B1F-455A-BD79-23A1ECC74535}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

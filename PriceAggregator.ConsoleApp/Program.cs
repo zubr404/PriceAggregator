@@ -15,8 +15,8 @@ namespace PriceAggregator.ConsoleApp
 {
     class Program
     {
-        private static IRepository candlesRepository = new CandlesRepository();
-        private static PriceAggregatorManager priceAggregatorManager = new PriceAggregatorManager(candlesRepository);
+        private static IRepository candlesRepository;// = new CandlesRepository();
+        private static PriceAggregatorManager priceAggregatorManager;// = new PriceAggregatorManager(candlesRepository);
 
         private static IEnumerable<string> pairs;
         private static IEnumerable<string> pairs1;
@@ -26,8 +26,13 @@ namespace PriceAggregator.ConsoleApp
         {
             try
             {
-                var bot = new TelegramBotClient("1944112564:AAE_Y7s8etHN4sqF5q8micSx8HWrpWvzmqo");
-                var outMessage = bot.SendTextMessageAsync("-1001575328973", "ConsoleApp: Hello!").GetAwaiter().GetResult();
+                //var bot = new TelegramBotClient("1944112564:AAE_Y7s8etHN4sqF5q8micSx8HWrpWvzmqo");
+                //var outMessage = bot.SendTextMessageAsync("-1001575328973", "ConsoleApp: Hello!").GetAwaiter().GetResult();
+
+                var dateTimeUtc = DateTime.UtcNow;
+                var timePointFirst = new DateTime(dateTimeUtc.Year, dateTimeUtc.Month, dateTimeUtc.Day, dateTimeUtc.Hour - 1, 0, 0);
+
+                Console.WriteLine(timePointFirst);
             }
             catch (Exception ex)
             {

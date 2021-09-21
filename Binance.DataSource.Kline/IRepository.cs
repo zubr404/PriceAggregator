@@ -8,7 +8,7 @@ namespace Binance.DataSource.Kline
 {
     public interface IRepository
     {
-        DataOperationType CreateOrUpdate(Candle candle);
+        DataOperationType CreateOrUpdate(Candle candle, bool fixedDepthHistory = true);
         Candles Get();
         IReadOnlyCollection<Candle> Get(string simbol, string interval);
     }
